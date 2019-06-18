@@ -128,4 +128,9 @@ public class Music {
     public void setPaused(boolean paused) {
         this.paused = paused;
     }
+
+    @Override
+    public String toString() {
+        return "Title: " + this.getTitle() + "\nArtist: " + this.getArtist() + "\nAlbum: " + this.getAlbum();
+    }
 }
