@@ -1,6 +1,10 @@
 package Data;
 import com.mpatric.mp3agic.*;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,10 +12,23 @@ public class Music {
     private static ArrayList<Music> musics = new ArrayList<>();
     private String address;
     private Mp3File mp3File;
+    private Player player;
+    private FileInputStream musicFile;
+    private boolean repeat;
+    private boolean paused;
+    private long pauseLocation;
+    private long totalSongLength;
 
-    public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException {
+    public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException, JavaLayerException {
+        this.address = address;
+        musicFile = null;
+        repeat = false;
+        paused = false;
+        totalSongLength = 0;
+        pauseLocation = 0;
         mp3File = new Mp3File(address);
         musics.add(this);
+        //TODO exception handling
     }
 
     public String getTitle(){
@@ -48,5 +65,70 @@ public class Music {
 
     public static ArrayList<Music> getMusics() {
         return musics;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void play() throws IOException, JavaLayerException {
+        musicFile = new FileInputStream(address);
+        totalSongLength = musicFile.available();
+        player = new Player(musicFile);
+        new Thread(() -> {
+            try {
+                player.play();
+                if (player.isComplete() && repeat){
+                    play();
+                }
+            } catch (JavaLayerException | IOException e) {
+                System.out.println("can't play this music");
+            }
+        }).start();
+    }
+
+    public void resume() throws IOException, JavaLayerException {
+        paused = false;
+        musicFile = new FileInputStream(address);
+        musicFile.skip(totalSongLength - pauseLocation);
+        player = new Player(musicFile);
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    player.play();
+                } catch (JavaLayerException e) {
+                    System.out.println("can't resume this music");
+                }
+            }
+        }.start();
+    }
+
+    public void pause(){
+        paused = true;
+        if (player != null){
+            try {
+                pauseLocation = musicFile.available();
+                player.close();
+            } catch (IOException e) {
+                System.out.println("can't pause this music");
+            }
+        }
+    }
+
+    public boolean isRepeat() {
+        return repeat;
+    }
+
+    public void setRepeat(boolean repeat) {
+        this.repeat = repeat;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 }
