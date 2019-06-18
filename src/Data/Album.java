@@ -10,5 +10,5 @@ public class Album {
         musics = new ArrayList<>();
         albums.add(this);
     }
-    //TODO complete today
+
 }
