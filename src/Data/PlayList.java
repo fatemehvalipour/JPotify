@@ -2,14 +2,14 @@ package Data;
 
 import java.util.ArrayList;
 
-public class playList {
+public class PlayList {
     private String name;
     private ArrayList<Music> playListMusics;
-    private static ArrayList<playList> playLists = new ArrayList<>();
+    private static ArrayList<PlayList> playLists = new ArrayList<>();
     private boolean removable;
     private boolean nameChange;
 
-    public playList(String name,boolean removable , boolean nameChange) {
+    public PlayList(String name, boolean removable , boolean nameChange) {
         this.name = name;
         this.removable = removable;
         this.nameChange = nameChange;
@@ -24,7 +24,7 @@ public class playList {
         playListMusics.remove(music);
     }
 
-    public void removePlayList(playList playList){
+    public void removePlayList(PlayList playList){
         if (removable){
             playLists.remove(playList);
 
@@ -35,7 +35,7 @@ public class playList {
         this.name = name;
     }
 
-    public void renamePlayList(playList playList, String newName){
+    public void renamePlayList(PlayList playList, String newName){
         if (nameChange){
             playList.setName(newName);
         }

@@ -92,16 +92,13 @@ public class Music {
         musicFile = new FileInputStream(address);
         musicFile.skip(totalSongLength - pauseLocation);
         player = new Player(musicFile);
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    player.play();
-                } catch (JavaLayerException e) {
-                    System.out.println("can't resume this music");
-                }
+        new Thread(() -> {
+            try {
+                player.play();
+            } catch (JavaLayerException e) {
+                System.out.println("can't resume this music");
             }
-        }.start();
+        }).start();
     }
 
     public void pause(){
