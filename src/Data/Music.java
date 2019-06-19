@@ -8,8 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Music {
-    private static ArrayList<Music> musics = new ArrayList<>();
+public class Music extends Library {
     private String address;
     private Mp3File mp3File;
     private Player player;
@@ -18,6 +17,7 @@ public class Music {
     private boolean paused;
     private long pauseLocation;
     private long totalSongLength;
+    private static ArrayList<Music> musics = new ArrayList<>();
 
     public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException, JavaLayerException {
         this.address = address;
@@ -34,6 +34,7 @@ public class Music {
     public String getTitle(){
         if (mp3File.hasId3v1Tag()){
             ID3v1 tag = mp3File.getId3v1Tag();
+            super.name = tag.getTitle();
             return tag.getTitle();
         }
         return null;
@@ -58,6 +59,7 @@ public class Music {
     public byte[] getAlbumArt(){
         if (mp3File.hasId3v2Tag()){
             ID3v2 tag = mp3File.getId3v2Tag();
+            image = tag.getAlbumImage();
             return tag.getAlbumImage();
         }
         return null;

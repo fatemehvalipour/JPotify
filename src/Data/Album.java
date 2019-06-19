@@ -2,14 +2,12 @@ package Data;
 
 import java.util.ArrayList;
 
-public class Album {
-    private String name;
-    private byte[] image;
+public class Album extends Library {
     private ArrayList<Music> musics;
     private static ArrayList<Album> albums  = new ArrayList<>();
 
     public Album(String name) {
-        this.name = name;
+        super.name = name;
         musics = new ArrayList<>();
         albums.add(this);
     }
