@@ -16,7 +16,7 @@ public class Album extends Library {
         musics.add(music);
     }
 
-    public String getName() {
+    public String getAlbumName() {
         return name;
     }
 
@@ -26,7 +26,7 @@ public class Album extends Library {
 
     public static void addMusicToAlbum(Music music){
         for (Album album : albums){
-            if (album.getName().equals(music.getAlbum())){
+            if (album.getAlbumName().equals(music.getAlbum())){
                 album.addMusic(music);
                 return;
             }

@@ -2,8 +2,7 @@ package Data;
 
 import java.util.ArrayList;
 
-public class PlayList {
-    private String name;
+public class PlayList extends Library{
     private ArrayList<Music> playListMusics;
     private static ArrayList<PlayList> playLists = new ArrayList<>();
     private boolean removable;
@@ -31,13 +30,13 @@ public class PlayList {
         }
     }
 
-    private void setName(String name) {
+    private void setPlayListName(String name) {
         this.name = name;
     }
 
     public void renamePlayList(PlayList playList, String newName){
         if (nameChange){
-            playList.setName(newName);
+            playList.setPlayListName(newName);
         }
     }
 
