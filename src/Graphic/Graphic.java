@@ -1,10 +1,15 @@
 package Graphic;
 
+import Data.Music;
 import Graphic.Containers.BorderPanel;
 import Graphic.Containers.GridPanel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class Graphic {
     private JFrame mainFrame;
@@ -27,5 +32,19 @@ public class Graphic {
         centerGridPanel = new GridPanel(centerBorderPanel, 4);
         eastGridPanel = new GridPanel(eastBorderPanel, 1);
         westGridPanel = new GridPanel(westBorderPanel, 1);
+    }
+
+    public void setAlbumArt(Music music) throws IOException {
+        ByteArrayInputStream byteArrayImage = new ByteArrayInputStream(music.getAlbumArt());
+        Image image = ImageIO.read(byteArrayImage);
+        image.getScaledInstance(120, 120, Image.SCALE_DEFAULT);
+        JLabel albumArt = new JLabel(new ImageIcon(image));
+        westBorderPanel.add(albumArt, BorderLayout.SOUTH);
+    }
+
+    public void removeAlbumArt(){
+        JLabel albumArt = new JLabel();
+        albumArt.setIcon(null);
+        westBorderPanel.add(albumArt, BorderLayout.SOUTH);
     }
 }
