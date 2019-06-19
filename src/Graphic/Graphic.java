@@ -21,6 +21,7 @@ public class Graphic {
     private GridPanel centerGridPanel;
     private GridPanel eastGridPanel;
     private GridPanel westGridPanel;
+    private JLabel albumArt;
 
     public Graphic(){
         mainFrame = new JFrame("JPotify");
@@ -32,18 +33,18 @@ public class Graphic {
         centerGridPanel = new GridPanel(centerBorderPanel, 4);
         eastGridPanel = new GridPanel(eastBorderPanel, 1);
         westGridPanel = new GridPanel(westBorderPanel, 1);
+        albumArt = null;
     }
 
     public void setAlbumArt(Music music) throws IOException {
         ByteArrayInputStream byteArrayImage = new ByteArrayInputStream(music.getAlbumArt());
         Image image = ImageIO.read(byteArrayImage);
         image.getScaledInstance(120, 120, Image.SCALE_DEFAULT);
-        JLabel albumArt = new JLabel(new ImageIcon(image));
+        albumArt.setIcon(new ImageIcon(image));
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
     }
 
     public void removeAlbumArt(){
-        JLabel albumArt = new JLabel();
         albumArt.setIcon(null);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
     }
