@@ -33,7 +33,14 @@ public class Graphic {
         centerGridPanel = new GridPanel(centerBorderPanel, 4);
         eastGridPanel = new GridPanel(eastBorderPanel, 1);
         westGridPanel = new GridPanel(westBorderPanel, 1);
+        mainFrame.setSize(950, 600);
+        northBorderPanel.setPreferredSize(new Dimension(950, 35));
+        eastBorderPanel.setPreferredSize(new Dimension( 120, 505));
+        westBorderPanel.setPreferredSize(new Dimension(120 , 505));
+        centerBorderPanel.setPreferredSize(new Dimension(710 , 505));
         albumArt = null;
+        mainFrame.setVisible(true);
+
     }
 
     public void setAlbumArt(Music music) throws IOException {
