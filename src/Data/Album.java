@@ -32,4 +32,7 @@ public class Album {
         album.addMusic(music);
     }
 
+    public static ArrayList<Album> getAlbums() {
+        return albums;
+    }
 }

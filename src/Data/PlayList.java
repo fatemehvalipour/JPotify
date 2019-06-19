@@ -41,5 +41,7 @@ public class PlayList {
         }
     }
 
-
+    public static ArrayList<PlayList> getPlayLists() {
+        return playLists;
+    }
 }
