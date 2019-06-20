@@ -1,6 +1,7 @@
 package Graphic.Containers;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class BorderPanel extends JPanel {
@@ -8,6 +9,7 @@ public class BorderPanel extends JPanel {
         super();
         setBackground(Color.black);
         setLayout(new BorderLayout());
+        setBorder(BorderFactory.createLineBorder(Color.GRAY, 5));
         con.add(this);
     }
 
@@ -15,6 +17,7 @@ public class BorderPanel extends JPanel {
         super();
         setBackground(Color.black);
         setLayout(new BorderLayout());
+        setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         con.add(this, index);
     }
 }

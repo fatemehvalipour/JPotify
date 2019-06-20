@@ -10,8 +10,10 @@ import Graphic.Containers.GridPanel;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 
 public class Graphic {
@@ -28,6 +30,7 @@ public class Graphic {
 
     public Graphic(){
         mainFrame = new JFrame("JPotify");
+        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainBorderPanel = new BorderPanel(mainFrame);
         centerBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.CENTER);
         northBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.NORTH);
@@ -41,7 +44,8 @@ public class Graphic {
         eastBorderPanel.setPreferredSize(new Dimension( 120, 505));
         westBorderPanel.setPreferredSize(new Dimension(120 , 505));
         centerBorderPanel.setPreferredSize(new Dimension(710 , 505));
-        albumArt = null;
+        albumArt = new JLabel();
+        westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         mainFrame.setVisible(true);
 
     }
@@ -49,14 +53,13 @@ public class Graphic {
     public void setAlbumArt(Music music) throws IOException {
         ByteArrayInputStream byteArrayImage = new ByteArrayInputStream(music.getAlbumArt());
         Image image = ImageIO.read(byteArrayImage);
-        image.getScaledInstance(120, 120, Image.SCALE_DEFAULT);
+        image = image.getScaledInstance(120, 120, Image.SCALE_DEFAULT);
+        albumArt.setPreferredSize(new Dimension(120, 120));
         albumArt.setIcon(new ImageIcon(image));
-        westBorderPanel.add(albumArt, BorderLayout.SOUTH);
     }
 
     public void removeAlbumArt(){
         albumArt.setIcon(null);
-        westBorderPanel.add(albumArt, BorderLayout.SOUTH);
     }
 
     public void showLibrary(ArrayList<Library> libraries){
