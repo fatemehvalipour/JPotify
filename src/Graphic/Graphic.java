@@ -53,7 +53,7 @@ public class Graphic {
     public void setAlbumArt(Music music) throws IOException {
         ByteArrayInputStream byteArrayImage = new ByteArrayInputStream(music.getAlbumArt());
         Image image = ImageIO.read(byteArrayImage);
-        image = image.getScaledInstance(120, 120, Image.SCALE_DEFAULT);
+        image = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         albumArt.setPreferredSize(new Dimension(120, 120));
         albumArt.setIcon(new ImageIcon(image));
     }
