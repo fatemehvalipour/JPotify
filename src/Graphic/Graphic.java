@@ -1,15 +1,18 @@
 package Graphic;
 
+import Data.IP;
+import Data.Library;
 import Data.Music;
+import Data.PlayList;
 import Graphic.Containers.BorderPanel;
 import Graphic.Containers.GridPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Graphic {
     private JFrame mainFrame;
@@ -54,5 +57,17 @@ public class Graphic {
     public void removeAlbumArt(){
         albumArt.setIcon(null);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
+    }
+
+    public void showLibrary(ArrayList<Library> libraries){
+
+    }
+
+    public void showPlayList(ArrayList<PlayList> playLists){
+
+    }
+
+    public void showFriendActivity(ArrayList<IP> IPList){
+
     }
 }
