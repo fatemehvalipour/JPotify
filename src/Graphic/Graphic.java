@@ -4,6 +4,7 @@ import Data.IP;
 import Data.Library;
 import Data.Music;
 import Data.PlayList;
+import Graphic.Components.JSlide;
 import Graphic.Containers.BorderPanel;
 import Graphic.Containers.GridPanel;
 
@@ -27,6 +28,7 @@ public class Graphic {
     private GridPanel centerGridPanel;
     private GridPanel eastGridPanel;
     private GridPanel westGridPanel;
+    private JSlide voiceSlider;
     private JLabel albumArt;
     private JLabel nameOfMusic;
 
@@ -50,16 +52,9 @@ public class Graphic {
         southBorderPanel.setPreferredSize(new Dimension(950, 120));
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
+        voiceSlider = new JSlide(southBorderPanel, 0, 100);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
-//        JButton btn = new JButton("center");
-//        //JButton btn2 = new JButton("balaa");
-//        JButton btn3 = new JButton("rast");
-//        JButton btn4 = new JButton("chap");
-//        //southBorderPanel.add(btn2, BorderLayout.NORTH);
-//        southBorderPanel.add(btn3, BorderLayout.EAST);
-//        southBorderPanel.add(btn4, BorderLayout.WEST);
-//        southBorderPanel.add(btn, BorderLayout.CENTER);
         mainFrame.setVisible(true);
 
     }
@@ -75,7 +70,8 @@ public class Graphic {
     public void setNameOfSong(Music music){
         nameOfMusic.setText("<html>" + music.getTitle() + "<br>" + music.getArtist() + "</html>");
         nameOfMusic.setFont(nameOfMusic.getFont().deriveFont(22.0f));
-        nameOfMusic.setSize(new Dimension(120,120));
+        nameOfMusic.setForeground(Color.white);
+        nameOfMusic.setPreferredSize(new Dimension(150,120));
     }
 
     public void removeAlbumArt(){
