@@ -5,6 +5,7 @@ import Data.Library;
 import Data.Music;
 import Data.PlayList;
 import Graphic.Components.JSlide;
+import Graphic.Components.ProgressBar;
 import Graphic.Containers.BorderPanel;
 import Graphic.Containers.GridPanel;
 
@@ -29,6 +30,7 @@ public class Graphic {
     private GridPanel eastGridPanel;
     private GridPanel westGridPanel;
     private JSlide voiceSlider;
+    private ProgressBar musicProgressBar;
     private JLabel albumArt;
     private JLabel nameOfMusic;
 
@@ -55,6 +57,12 @@ public class Graphic {
         voiceSlider = new JSlide(southBorderPanel, 0, 100);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
+        musicProgressBar = new ProgressBar(southBorderPanel);
+        //test
+        JLabel jl = new JLabel("fatemeh");
+        JLabel jl2 = new JLabel("ali");
+        southBorderPanel.add(jl, BorderLayout.NORTH);
+        southBorderPanel.add(jl2, BorderLayout.SOUTH);
         mainFrame.setVisible(true);
 
     }
