@@ -5,6 +5,7 @@ import Data.Library;
 import Data.Music;
 import Data.PlayList;
 import Graphic.Components.JSlide;
+import Graphic.Components.ListButton;
 import Graphic.Components.ProgressBar;
 import Graphic.Containers.BorderPanel;
 import Graphic.Containers.GridPanel;
@@ -17,7 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.BatchUpdateException;
 import java.util.ArrayList;
-
+//TODO check all the sizes plz
 public class Graphic {
     private JFrame mainFrame;
     private BorderPanel mainBorderPanel;
@@ -31,8 +32,12 @@ public class Graphic {
     private GridPanel westGridPanel;
     private JSlide voiceSlider;
     private ProgressBar musicProgressBar;
+    private ListButton musicButton;
+    private ListButton albumButton;
+    private ListButton playListButton;
     private JLabel albumArt;
     private JLabel nameOfMusic;
+
 
     public Graphic(){
         mainFrame = new JFrame("JPotify");
@@ -46,6 +51,7 @@ public class Graphic {
         centerGridPanel = new GridPanel(centerBorderPanel, 4);
         eastGridPanel = new GridPanel(eastBorderPanel, 1);
         westGridPanel = new GridPanel(westBorderPanel, 1);
+        centerGridPanel = new GridPanel(centerBorderPanel, 4);
         mainFrame.setSize(950, 600);
         northBorderPanel.setPreferredSize(new Dimension(950, 35));
         eastBorderPanel.setPreferredSize(new Dimension( 120, 445));
@@ -58,11 +64,14 @@ public class Graphic {
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
         musicProgressBar = new ProgressBar(southBorderPanel);
-        //test
-        JLabel jl = new JLabel("fatemeh");
-        JLabel jl2 = new JLabel("ali");
-        southBorderPanel.add(jl, BorderLayout.NORTH);
-        southBorderPanel.add(jl2, BorderLayout.SOUTH);
+        musicButton = new ListButton(westGridPanel, "music");
+        albumButton = new ListButton(westGridPanel, "albums");
+        playListButton = new ListButton(westGridPanel, "playList");
+//        //test
+//        JLabel jl = new JLabel("fatemeh");
+//        JLabel jl2 = new JLabel("ali");
+//        southBorderPanel.add(jl, BorderLayout.NORTH);
+//        southBorderPanel.add(jl2, BorderLayout.SOUTH);
         mainFrame.setVisible(true);
 
     }
@@ -87,6 +96,9 @@ public class Graphic {
     }
 
     public void showLibrary(ArrayList<Library> libraries){
+        for (Library library : libraries){
+            centerGridPanel.add(library);
+        }
 
     }
 
