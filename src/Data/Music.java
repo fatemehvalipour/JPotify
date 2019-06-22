@@ -1,4 +1,5 @@
 package Data;
+
 import com.mpatric.mp3agic.*;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
@@ -31,8 +32,8 @@ public class Music extends Library {
         //TODO exception handling
     }
 
-    public String getTitle(){
-        if (mp3File.hasId3v1Tag()){
+    public String getTitle() {
+        if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
             super.name = tag.getTitle();
             return tag.getTitle();
@@ -40,24 +41,24 @@ public class Music extends Library {
         return null;
     }
 
-    public String getArtist(){
-        if (mp3File.hasId3v1Tag()){
+    public String getArtist() {
+        if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
             return tag.getArtist();
         }
         return null;
     }
 
-    public String getAlbum(){
-        if (mp3File.hasId3v1Tag()){
+    public String getAlbum() {
+        if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
             return tag.getAlbum();
         }
         return null;
     }
 
-    public byte[] getAlbumArt(){
-        if (mp3File.hasId3v2Tag()){
+    public byte[] getAlbumArt() {
+        if (mp3File.hasId3v2Tag()) {
             ID3v2 tag = mp3File.getId3v2Tag();
             image = tag.getAlbumImage();
             return tag.getAlbumImage();
@@ -80,7 +81,7 @@ public class Music extends Library {
         new Thread(() -> {
             try {
                 player.play();
-                if (player.isComplete() && repeat){
+                if (player.isComplete() && repeat) {
                     play();
                 }
             } catch (JavaLayerException | IOException e) {
@@ -103,9 +104,9 @@ public class Music extends Library {
         }).start();
     }
 
-    public void pause(){
+    public void pause() {
         paused = true;
-        if (player != null){
+        if (player != null) {
             try {
                 pauseLocation = musicFile.available();
                 player.close();

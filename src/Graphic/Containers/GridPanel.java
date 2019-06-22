@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GridPanel extends JPanel {
-    public GridPanel(BorderPanel borderPanel, int column) {
+    public GridPanel(BorderPanel borderPanel, int column, Object index) {
         super();
         setBackground(Color.black);
         setLayout(new GridLayout(0, column));
-        borderPanel.add(this , BorderLayout.NORTH);
+        borderPanel.add(this , index);
     }
 }
