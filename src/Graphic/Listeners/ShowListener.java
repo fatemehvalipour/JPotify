@@ -1,6 +1,7 @@
 package Graphic.Listeners;
 
 import Data.Album;
+import Data.Library;
 import Data.Music;
 import Graphic.Graphic;
 
@@ -17,15 +18,19 @@ public class ShowListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource() instanceof JButton && !(e.getSource() instanceof Album)){
+        if (e.getSource() instanceof JButton && (((JButton) e.getSource()).getIcon() == null)){
             if (((JButton)e.getSource()).getText().equals("Music")){
                 graphic.showLibrary(Music.getMusics());
             } else {
                 graphic.showLibrary(Album.getAlbums());
             }
         } else {
-            Album album = ((Album)e.getSource());
-            graphic.showLibrary(album.getMusics());
+            for (Library album : Album.getAlbums()){
+                if (((Album)album).getAlbumName().equals(((JButton)e.getSource()).getText())){
+                    graphic.showLibrary(((Album)album).getMusics());
+                    return;
+                }
+            }
         }
     }
 

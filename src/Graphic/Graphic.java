@@ -110,7 +110,7 @@ public class Graphic {
             //TODO picture add kone??
             //masalan toString ba shekl
         }
-
+        centerGridPanel.repaint();
     }
 
     public void showPlayList(ArrayList<PlayList> playLists){

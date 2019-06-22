@@ -1,5 +1,7 @@
 package Data;
 
+import Graphic.Listeners.ShowListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -12,9 +14,12 @@ public class Album extends Library {
     private JLabel albumName;
 
     public Album(String name) {
-        imageButton = null;
+        setBackground(Color.BLACK);
+        imageButton = new JButton();
+        albumName = new JLabel();
         super.name = name;
         albumName.setText(name);
+        imageButton.setText(name);
         imageButton.setFocusable(false);
         setPreferredSize(new Dimension(200, 240));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -25,6 +30,7 @@ public class Album extends Library {
         albumName.setBackground(Color.BLACK);
         albumName.setPreferredSize(new Dimension(200, 10));
         musics = new ArrayList<>();
+        imageButton.addMouseListener(new ShowListener(graphic));
         albums.add(this);
     }
 
@@ -51,7 +57,7 @@ public class Album extends Library {
                 return;
             }
         }
-        Album album = new Album("" + music.getAlbum());
+        Album album = new Album(music.getAlbum());
         album.addMusic(music);
         album.setImage(music.getAlbumArt());
         album.getImageButton().setIcon(new ImageIcon(album.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));

@@ -1,5 +1,6 @@
 package Graphic.Listeners;
 
+import Data.Album;
 import Data.Music;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
@@ -19,6 +20,7 @@ public class AddMusicListener implements MouseListener {
         if (result == JFileChooser.APPROVE_OPTION){
             try {
                 Music music = new Music(chooser.getSelectedFile().getAbsolutePath());
+                Album.addMusicToAlbum(music);
             } catch (InvalidDataException e1) {
                 System.out.println("Can't open this file");
             } catch (IOException e1) {
