@@ -19,8 +19,6 @@ public class AddMusicListener implements MouseListener {
         if (result == JFileChooser.APPROVE_OPTION){
             try {
                 Music music = new Music(chooser.getSelectedFile().getAbsolutePath());
-            } catch (JavaLayerException e1) {
-                e1.printStackTrace();
             } catch (InvalidDataException e1) {
                 System.out.println("Can't open this file");
             } catch (IOException e1) {

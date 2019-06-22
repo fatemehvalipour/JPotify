@@ -8,6 +8,8 @@ import Graphic.Components.JSlide;
 import Graphic.Components.ListButton;
 import Graphic.Containers.BorderPanel;
 import Graphic.Containers.GridPanel;
+import Graphic.Listeners.AddMusicListener;
+import Graphic.Listeners.ShowListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -72,8 +74,11 @@ public class Graphic {
         libraries.setFont(nameOfMusic.getFont().deriveFont(22.0f));
         libraries.setForeground(Color.white);
         add = new ListButton(westGridPanel, "Add");
+        add.addMouseListener(new AddMusicListener());
         musicButton = new ListButton(westGridPanel, "Music");
+        musicButton.addMouseListener(new ShowListener(this));
         albumButton = new ListButton(westGridPanel, "Albums");
+        albumButton.addMouseListener(new ShowListener(this));
         playListButton = new ListButton(westGridPanel, "PlayList");
         mainFrame.setVisible(true);
 

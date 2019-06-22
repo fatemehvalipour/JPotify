@@ -24,7 +24,7 @@ public class Music extends Library {
     private long totalSongLength;
     private static ArrayList<Library> musics = new ArrayList<>();
 
-    public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException, JavaLayerException {
+    public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException {
         this.address = address;
         musicFile = null;
         repeat = false;
@@ -33,8 +33,18 @@ public class Music extends Library {
         pauseLocation = 0;
         mp3File = new Mp3File(address);
         musics.add(this);
-        setPreferredSize(new Dimension(120, 120));
-        setIcon(new ImageIcon(this.getAlbumArt().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
+        setBackground(Color.BLACK);
+        setPreferredSize(new Dimension(200, 240));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        JButton imageButton = new JButton(new ImageIcon(this.getAlbumArt().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+        imageButton.setFocusable(false);
+        JLabel name = new JLabel("<html>" + this.getTitle() + "<br>" + this.getArtist() + "</html>");
+        imageButton.setBackground(Color.BLACK);
+        imageButton.setPreferredSize(new Dimension(200, 200));
+        name.setBackground(Color.BLACK);
+        name.setPreferredSize(new Dimension(200, 10));
+        add(imageButton);
+        add(name);
         //TODO exception handling
     }
 
