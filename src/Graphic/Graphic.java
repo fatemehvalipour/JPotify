@@ -6,17 +6,14 @@ import Data.Music;
 import Data.PlayList;
 import Graphic.Components.JSlide;
 import Graphic.Components.ListButton;
-import Graphic.Components.ProgressBar;
 import Graphic.Containers.BorderPanel;
 import Graphic.Containers.GridPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 //TODO check all the sizes plz
 public class Graphic {
@@ -27,16 +24,18 @@ public class Graphic {
     private BorderPanel eastBorderPanel;
     private BorderPanel northBorderPanel;
     private BorderPanel southBorderPanel;
+    private GridPanel southCenterGridPanel;
     private GridPanel centerGridPanel;
     private GridPanel eastGridPanel;
     private GridPanel westGridPanel;
     private JSlide voiceSlider;
-    private ProgressBar musicProgressBar;
     private ListButton musicButton;
     private ListButton albumButton;
     private ListButton playListButton;
+    private ListButton add;
     private JLabel albumArt;
     private JLabel nameOfMusic;
+    private JLabel libraries;
 
 
     public Graphic(){
@@ -48,10 +47,11 @@ public class Graphic {
         eastBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.EAST);
         westBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.WEST);
         southBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.SOUTH);
-        centerGridPanel = new GridPanel(centerBorderPanel, 4);
-        eastGridPanel = new GridPanel(eastBorderPanel, 1);
-        westGridPanel = new GridPanel(westBorderPanel, 1);
-        centerGridPanel = new GridPanel(centerBorderPanel, 4);
+        centerGridPanel = new GridPanel(centerBorderPanel, 4, BorderLayout.NORTH);
+        eastGridPanel = new GridPanel(eastBorderPanel, 1, BorderLayout.NORTH);
+        westGridPanel = new GridPanel(westBorderPanel, 1, BorderLayout.NORTH);
+        centerGridPanel = new GridPanel(centerBorderPanel, 4, BorderLayout.NORTH);
+        southCenterGridPanel = new GridPanel(southBorderPanel, 1, BorderLayout.CENTER);
         mainFrame.setSize(950, 600);
         northBorderPanel.setPreferredSize(new Dimension(950, 35));
         eastBorderPanel.setPreferredSize(new Dimension( 120, 445));
@@ -63,15 +63,14 @@ public class Graphic {
         voiceSlider = new JSlide(southBorderPanel, 0, 100);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
-        musicProgressBar = new ProgressBar(southBorderPanel);
-        musicButton = new ListButton(westGridPanel, "music");
-        albumButton = new ListButton(westGridPanel, "albums");
-        playListButton = new ListButton(westGridPanel, "playList");
-//        //test
-//        JLabel jl = new JLabel("fatemeh");
-//        JLabel jl2 = new JLabel("ali");
-//        southBorderPanel.add(jl, BorderLayout.NORTH);
-//        southBorderPanel.add(jl2, BorderLayout.SOUTH);
+        libraries = new JLabel("Libraries");
+        westGridPanel.add(libraries);
+        libraries.setFont(nameOfMusic.getFont().deriveFont(22.0f));
+        libraries.setForeground(Color.white);
+        add = new ListButton(westGridPanel, "Add");
+        musicButton = new ListButton(westGridPanel, "Music");
+        albumButton = new ListButton(westGridPanel, "Albums");
+        playListButton = new ListButton(westGridPanel, "PlayList");
         mainFrame.setVisible(true);
 
     }
@@ -98,6 +97,8 @@ public class Graphic {
     public void showLibrary(ArrayList<Library> libraries){
         for (Library library : libraries){
             centerGridPanel.add(library);
+            //TODO picture add kone??
+            //masalan toString ba shekl
         }
 
     }
