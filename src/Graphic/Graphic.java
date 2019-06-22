@@ -7,6 +7,7 @@ import Data.PlayList;
 import Graphic.Components.JSlide;
 import Graphic.Components.ListButton;
 import Graphic.Containers.BorderPanel;
+import Graphic.Containers.GridBagPanel;
 import Graphic.Containers.GridPanel;
 import Graphic.Listeners.AddMusicListener;
 import Graphic.Listeners.ShowListener;
@@ -39,6 +40,7 @@ public class Graphic {
     private ListButton albumButton;
     private ListButton playListButton;
     private ListButton add;
+    private GridBagPanel southCenterGridBagPanel;
     private JLabel albumArt;
     private JLabel nameOfMusic;
     private JLabel libraries;
@@ -58,6 +60,8 @@ public class Graphic {
         westGridPanel = new GridPanel(westBorderPanel, 1, BorderLayout.NORTH);
         centerGridPanel = new GridPanel(centerBorderPanel, 4, BorderLayout.NORTH);
         southCenterGridPanel = new GridPanel(southBorderPanel, 1, BorderLayout.CENTER);
+        southCenterGridBagPanel = new GridBagPanel(southCenterGridPanel);
+
         mainFrame.setSize(950, 600);
         northBorderPanel.setPreferredSize(new Dimension(950, 35));
         eastBorderPanel.setPreferredSize(new Dimension( 120, 445));
@@ -80,6 +84,7 @@ public class Graphic {
         albumButton = new ListButton(westGridPanel, "Albums");
         albumButton.addMouseListener(new ShowListener(this));
         playListButton = new ListButton(westGridPanel, "PlayList");
+
         mainFrame.setVisible(true);
 
     }
