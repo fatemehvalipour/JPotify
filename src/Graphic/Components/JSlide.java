@@ -16,6 +16,5 @@ public class JSlide extends JSlider {
         this.setBackground(Color.black);
         this.setPreferredSize(new Dimension(150,120));
         borderPanel.add(this, BorderLayout.EAST);
-
     }
 }

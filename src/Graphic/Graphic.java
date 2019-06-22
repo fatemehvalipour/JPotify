@@ -11,9 +11,13 @@ import Graphic.Containers.GridPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.metal.DefaultMetalTheme;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 //TODO check all the sizes plz
 public class Graphic {
@@ -76,8 +80,7 @@ public class Graphic {
     }
 
     public void setAlbumArt(Music music) throws IOException {
-        ByteArrayInputStream byteArrayImage = new ByteArrayInputStream(music.getAlbumArt());
-        Image image = ImageIO.read(byteArrayImage);
+        Image image = music.getAlbumArt();
         image = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         albumArt.setPreferredSize(new Dimension(120, 120));
         albumArt.setIcon(new ImageIcon(image));
@@ -95,6 +98,8 @@ public class Graphic {
     }
 
     public void showLibrary(ArrayList<Library> libraries){
+        centerGridPanel.removeAll();
+        centerGridPanel.revalidate();
         for (Library library : libraries){
             centerGridPanel.add(library);
             //TODO picture add kone??

@@ -1,10 +1,13 @@
 package Data;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Album extends Library {
-    private ArrayList<Music> musics;
-    private static ArrayList<Album> albums  = new ArrayList<>();
+    private ArrayList<Library> musics;
+    private static ArrayList<Library> albums  = new ArrayList<>();
 
     public Album(String name) {
         super.name = name;
@@ -20,23 +23,32 @@ public class Album extends Library {
         return name;
     }
 
-    private void setImage(byte[] image) {
+    private void setImage(Image image) {
         this.image = image;
     }
 
-    public static void addMusicToAlbum(Music music){
-        for (Album album : albums){
-            if (album.getAlbumName().equals(music.getAlbum())){
-                album.addMusic(music);
+    public Image getImage(){
+        return image;
+    }
+
+    public static void addMusicToAlbum(Music music) throws IOException {
+        for (Library album : albums){
+            if (((Album)album).getAlbumName().equals(music.getAlbum())){
+                ((Album)album).addMusic(music);
                 return;
             }
         }
         Album album = new Album("" + music.getAlbum());
         album.addMusic(music);
         album.setImage(music.getAlbumArt());
+        album.setIcon(new ImageIcon(album.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
     }
 
-    public static ArrayList<Album> getAlbums() {
+    public static ArrayList<Library> getAlbums() {
         return albums;
+    }
+
+    public ArrayList<Library> getMusics() {
+        return musics;
     }
 }

@@ -4,6 +4,10 @@ import com.mpatric.mp3agic.*;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +22,7 @@ public class Music extends Library {
     private boolean paused;
     private long pauseLocation;
     private long totalSongLength;
-    private static ArrayList<Music> musics = new ArrayList<>();
+    private static ArrayList<Library> musics = new ArrayList<>();
 
     public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException, JavaLayerException {
         this.address = address;
@@ -29,6 +33,8 @@ public class Music extends Library {
         pauseLocation = 0;
         mp3File = new Mp3File(address);
         musics.add(this);
+        setPreferredSize(new Dimension(120, 120));
+        setIcon(new ImageIcon(this.getAlbumArt().getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
         //TODO exception handling
     }
 
@@ -57,16 +63,17 @@ public class Music extends Library {
         return null;
     }
 
-    public byte[] getAlbumArt() {
-        if (mp3File.hasId3v2Tag()) {
+    public Image getAlbumArt() throws IOException {
+        if (mp3File.hasId3v2Tag()){
             ID3v2 tag = mp3File.getId3v2Tag();
-            image = tag.getAlbumImage();
-            return tag.getAlbumImage();
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(tag.getAlbumImage());
+            image = ImageIO.read(byteArrayInputStream);
+            return image;
         }
         return null;
     }
 
-    public static ArrayList<Music> getMusics() {
+    public static ArrayList<Library> getMusics() {
         return musics;
     }
 
