@@ -1,3 +1,4 @@
+import Data.Library;
 import Data.Music;
 import Data.PlayList;
 import Graphic.Graphic;
@@ -12,6 +13,7 @@ public class Main {
         PlayList sharedPlaylist = new PlayList("Shared", false, false);
         Music.playingMusic = new Music("C:\\Users\\Korosh\\Downloads\\Music\\Roozbeh Bemani - Yani Tamoom.mp3");
         Graphic graphic = new Graphic();
+        Library.setGraphic(graphic);
         graphic.setAlbumArt(Music.playingMusic);
         graphic.setNameOfSong(Music.playingMusic);
     }
