@@ -79,7 +79,7 @@ public class Graphic {
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
         libraries = new JLabel("Libraries");
         westGridPanel.add(libraries);
-        libraries.setFont(nameOfMusic.getFont().deriveFont(22.0f));
+        libraries.setFont(libraries.getFont().deriveFont(22.0f));
         libraries.setForeground(Color.white);
         add = new ListButton(westGridPanel, "Add");
         add.addMouseListener(new AddMusicListener());
