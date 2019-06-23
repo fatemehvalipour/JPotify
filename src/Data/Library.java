@@ -13,4 +13,8 @@ public class Library extends JPanel {
     public static void setGraphic(Graphic g) {
         graphic = g;
     }
+
+    public static Graphic getGraphic() {
+        return graphic;
+    }
 }

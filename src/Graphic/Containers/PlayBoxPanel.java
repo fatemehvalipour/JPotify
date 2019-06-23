@@ -12,6 +12,8 @@ public class PlayBoxPanel extends JPanel{
     private JButton previousButton;
     private JButton likeButton;
     private JButton shuffleButton;
+    private JButton stopButton;
+    private JButton repeatButton;
     private Box horizontalBox;
     public PlayBoxPanel() {
         super();
@@ -21,6 +23,8 @@ public class PlayBoxPanel extends JPanel{
         previousButton = new JButton();
         likeButton = new JButton();
         shuffleButton = new JButton();
+        stopButton = new JButton();
+        repeatButton = new JButton();
     try {
             playButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("play.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             playButton.setBackground(Color.black);
@@ -42,6 +46,15 @@ public class PlayBoxPanel extends JPanel{
             shuffleButton.setPreferredSize(new Dimension(100, 100));
             shuffleButton.setBackground(Color.black);
             shuffleButton.addMouseListener(new ShuffleButtonListener());
+            stopButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("stop.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            stopButton.setBackground(Color.black);
+            stopButton.setPreferredSize(new Dimension(100, 100));
+            stopButton.addMouseListener(new PlayButtonListener());
+            stopButton.addMouseListener(new StopButtonListener());
+            repeatButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("repeat.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            repeatButton.setBackground(Color.black);
+            repeatButton.setPreferredSize(new Dimension(100, 100));
+            repeatButton.addMouseListener(new RepeatbuttonListener());
 
         } catch (Exception ex) {
             System.out.println(ex);
@@ -49,9 +62,11 @@ public class PlayBoxPanel extends JPanel{
     horizontalBox = Box.createHorizontalBox();
     horizontalBox.add(Box.createGlue());
     horizontalBox.add(likeButton);
+    horizontalBox.add(stopButton);
     horizontalBox.add(previousButton);
     horizontalBox.add(playButton);
     horizontalBox.add(nextButton);
+    horizontalBox.add(repeatButton);
     horizontalBox.add(shuffleButton);
     horizontalBox.add(Box.createGlue());
     add(horizontalBox);

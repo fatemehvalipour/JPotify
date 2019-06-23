@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Music extends Library {
+    //TODO make the public key word to private
     public static Music playingMusic = null;
     public static boolean isPlaying = false;
     private boolean isFavorite;
@@ -21,7 +22,8 @@ public class Music extends Library {
     private Mp3File mp3File;
     private Player player;
     private FileInputStream musicFile;
-    private boolean repeat;
+    public static boolean repeat = false;
+    //TODO change the icon if it is repeatable
     private boolean paused;
     private long pauseLocation;
     private long totalSongLength;
@@ -139,14 +141,6 @@ public class Music extends Library {
 
     public long getDuration(){
         return mp3File.getLengthInSeconds();
-    }
-
-    public boolean isRepeat() {
-        return repeat;
-    }
-
-    public void setRepeat(boolean repeat) {
-        this.repeat = repeat;
     }
 
     public boolean isPaused() {
