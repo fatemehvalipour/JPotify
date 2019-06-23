@@ -35,6 +35,7 @@ public class PlayBoxPanel extends JPanel{
             shuffleButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("shuffle.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             shuffleButton.setPreferredSize(new Dimension(100, 100));
             shuffleButton.setBackground(Color.black);
+
         } catch (Exception ex) {
             System.out.println(ex);
         }

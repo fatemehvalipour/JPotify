@@ -134,6 +134,10 @@ public class Music extends Library {
         }
     }
 
+    public long getDuration(){
+        return mp3File.getLengthInSeconds();
+    }
+
     public boolean isRepeat() {
         return repeat;
     }

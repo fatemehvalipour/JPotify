@@ -4,8 +4,9 @@ import Data.IP;
 import Data.Library;
 import Data.Music;
 import Data.PlayList;
-import Graphic.Components.JSlide;
 import Graphic.Components.ListButton;
+import Graphic.Components.PlayMusicJSlide;
+import Graphic.Components.VoiceJSlide;
 import Graphic.Containers.*;
 import Graphic.Listeners.AddMusicListener;
 import Graphic.Listeners.ShowListener;
@@ -35,17 +36,19 @@ public class Graphic {
     private GridPanel westGridPanel;
     private PlayBoxPanel playBoxPanel;
     private BoxPanel southCenterBoxPanel;
-    private JSlide voiceSlider;
+    private VoiceJSlide voiceSlider;
     private ListButton musicButton;
     private ListButton albumButton;
     private ListButton playListButton;
+    private PlayMusicJSlide playMusicJSlider;
     private ListButton add;
     private JLabel albumArt;
     private JLabel nameOfMusic;
     private JLabel libraries;
+    private Music playingMusic;
 
 
-    public Graphic() {
+    public Graphic(Music music) {
         mainFrame = new JFrame("JPotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainBorderPanel = new BorderPanel(mainFrame);
@@ -62,7 +65,6 @@ public class Graphic {
         playBoxPanel = new PlayBoxPanel();
         southCenterBoxPanel.add(playBoxPanel);
         southBorderPanel.add(southCenterBoxPanel, BorderLayout.CENTER);
-        southCenterBoxPanel.add(new JButton("test"));
         mainFrame.setSize(950, 600);
         northBorderPanel.setPreferredSize(new Dimension(950, 35));
         eastBorderPanel.setPreferredSize(new Dimension(120, 445));
@@ -71,7 +73,7 @@ public class Graphic {
         southBorderPanel.setPreferredSize(new Dimension(950, 120));
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
-        voiceSlider = new JSlide(southBorderPanel, 0, 100);
+        voiceSlider = new VoiceJSlide(southBorderPanel, 0, 100);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
         libraries = new JLabel("Libraries");
@@ -85,6 +87,9 @@ public class Graphic {
         albumButton = new ListButton(westGridPanel, "Albums");
         albumButton.addMouseListener(new ShowListener(this));
         playListButton = new ListButton(westGridPanel, "PlayList");
+        playMusicJSlider = new PlayMusicJSlide(music);
+        southCenterBoxPanel.add(playMusicJSlider);
+        playingMusic = music;
         mainFrame.setVisible(true);
 
     }
