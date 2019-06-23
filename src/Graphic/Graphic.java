@@ -46,7 +46,7 @@ public class Graphic {
     private Music playingMusic;
 
 
-    public Graphic(Music music) throws IOException {
+    public Graphic() throws IOException {
         mainFrame = new JFrame("JPotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainBorderPanel = new BorderPanel(mainFrame);
@@ -88,9 +88,8 @@ public class Graphic {
         albumButton = new ListButton(westGridPanel, "Albums");
         albumButton.addMouseListener(new ShowListener(this));
         playListButton = new ListButton(westGridPanel, "PlayList");
-        playMusicJSlider = new PlayMusicJSlide(music);
+        playMusicJSlider = new PlayMusicJSlide(Music.playingMusic);
         southCenterBoxPanel.add(playMusicJSlider);
-        playingMusic = music;
         mainFrame.setVisible(true);
 
     }
