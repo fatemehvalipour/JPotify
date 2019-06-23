@@ -1,9 +1,6 @@
 package Graphic;
 
-import Data.IP;
-import Data.Library;
-import Data.Music;
-import Data.PlayList;
+import Data.*;
 import Graphic.Components.ListButton;
 import Graphic.Components.PlayMusicJSlide;
 import Graphic.Components.VoiceJSlide;
@@ -31,6 +28,7 @@ public class Graphic {
     private BorderPanel eastBorderPanel;
     private BorderPanel northBorderPanel;
     private BorderPanel southBorderPanel;
+    private SearchPanel searchPanel;
     private GridPanel centerGridPanel;
     private GridPanel eastGridPanel;
     private GridPanel westGridPanel;
@@ -48,7 +46,7 @@ public class Graphic {
     private Music playingMusic;
 
 
-    public Graphic(Music music) {
+    public Graphic(Music music) throws IOException {
         mainFrame = new JFrame("JPotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainBorderPanel = new BorderPanel(mainFrame);
@@ -71,6 +69,9 @@ public class Graphic {
         westBorderPanel.setPreferredSize(new Dimension(120, 445));
         centerBorderPanel.setPreferredSize(new Dimension(710, 445));
         southBorderPanel.setPreferredSize(new Dimension(950, 120));
+        User user = new User("Water Bottle", "1234");
+        searchPanel = new SearchPanel(user);
+        mainBorderPanel.add(searchPanel, BorderLayout.PAGE_START);
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
         voiceSlider = new VoiceJSlide(southBorderPanel, 0, 100);
