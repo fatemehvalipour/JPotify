@@ -38,12 +38,13 @@ public class Music extends Library {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JButton imageButton = new JButton(new ImageIcon(this.getAlbumArt().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
         imageButton.setFocusable(false);
-        JLabel name = new JLabel("<html>" + this.getTitle() + "<br>" + this.getArtist() + "</html>");
+        JLabel name = new JLabel("<html>" + this.getTitle() + "<br>" + this.getArtist() + "</html>",  SwingConstants.CENTER);
         imageButton.setBackground(Color.BLACK);
         imageButton.setPreferredSize(new Dimension(200, 200));
         name.setBackground(Color.BLACK);
         name.setPreferredSize(new Dimension(200, 10));
         add(imageButton);
+        name.setVerticalAlignment(SwingConstants.CENTER);
         add(name);
         //TODO exception handling
     }
