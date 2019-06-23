@@ -8,7 +8,7 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InvalidDataException, UnsupportedTagException {
+    public static void main(String[] args) throws IOException, InvalidDataException, UnsupportedTagException, InterruptedException {
         PlayList favoritePlaylist = new PlayList("Favorite", false, false);
         PlayList sharedPlaylist = new PlayList("Shared", false, false);
         Music.playingMusic = new Music("C:\\Users\\Korosh\\Downloads\\Music\\Roozbeh Bemani - Yani Tamoom.mp3");
@@ -16,5 +16,9 @@ public class Main {
         Library.setGraphic(graphic);
         graphic.setAlbumArt(Music.playingMusic);
         graphic.setNameOfSong(Music.playingMusic);
+        while (true){
+            System.out.println(Music.playingMusic.getEstimatedTime());
+            Thread.sleep(1000);
+        }
     }
 }

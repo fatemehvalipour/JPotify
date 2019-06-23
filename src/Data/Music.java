@@ -12,6 +12,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Music extends Library {
     //TODO make the public key word to private
@@ -27,6 +29,8 @@ public class Music extends Library {
     private boolean paused;
     private long pauseLocation;
     private long totalSongLength;
+    private int estimatedTime;
+    private Timer timer;
     private static ArrayList<Library> musics = new ArrayList<>();
 
     public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException {
@@ -51,6 +55,7 @@ public class Music extends Library {
         add(imageButton);
         name.setVerticalAlignment(SwingConstants.CENTER);
         add(name);
+        estimatedTime = 0;
         //TODO exception handling
     }
 
@@ -101,6 +106,8 @@ public class Music extends Library {
         musicFile = new FileInputStream(address);
         totalSongLength = musicFile.available();
         player = new Player(musicFile);
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new estimatedTime(), 0, 1000);
         new Thread(() -> {
             try {
                 player.play();
@@ -114,6 +121,8 @@ public class Music extends Library {
     }
 
     public void stop(){
+        timer.cancel();
+        estimatedTime = 0;
         paused = false;
         if( null != player) {
             player.close();
@@ -124,6 +133,8 @@ public class Music extends Library {
 
     public void resume() throws IOException, JavaLayerException {
         paused = false;
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new estimatedTime(), 0, 1000);
         musicFile = new FileInputStream(address);
         musicFile.skip(totalSongLength - pauseLocation);
         player = new Player(musicFile);
@@ -137,6 +148,7 @@ public class Music extends Library {
     }
 
     public void pause() {
+        timer.cancel();
         paused = true;
         if (player != null) {
             try {
@@ -168,9 +180,19 @@ public class Music extends Library {
         isFavorite = favorite;
     }
 
+    public int getEstimatedTime(){
+        return estimatedTime;
+    }
 
     @Override
     public String toString() {
         return "Title: " + this.getTitle() + "\nArtist: " + this.getArtist() + "\nAlbum: " + this.getAlbum();
+    }
+
+    class estimatedTime extends TimerTask {
+        @Override
+        public void run() {
+            estimatedTime++;
+        }
     }
 }

@@ -88,7 +88,7 @@ public class Graphic {
         albumButton = new ListButton(westGridPanel, "Albums");
         albumButton.addMouseListener(new ShowListener(this));
         playListButton = new ListButton(westGridPanel, "PlayList");
-        playMusicJSlider = new PlayMusicJSlide(Music.playingMusic);
+        playMusicJSlider = new PlayMusicJSlide();
         southCenterBoxPanel.add(playMusicJSlider);
         mainFrame.setVisible(true);
 
