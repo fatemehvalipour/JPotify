@@ -10,13 +10,10 @@ public class StopButtonListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (Music.playingMusic != null){
-            //Music.playingMusic.stop;
+            Music.playingMusic.stop();
             Library.getGraphic().removeAlbumArt();
             Music.playingMusic = null;
             Music.isPlaying = false;
-            //TODO stop method in music
-
-
         }
     }
 

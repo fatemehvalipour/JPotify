@@ -110,7 +110,6 @@ public class Graphic {
     }
 
     public void removeAlbumArt() {
-
         albumArt.setIcon(null);
     }
 

@@ -113,6 +113,15 @@ public class Music extends Library {
         }).start();
     }
 
+    public void stop(){
+        paused = false;
+        if( null != player) {
+            player.close();
+            totalSongLength = 0;
+            pauseLocation = 0;
+        }
+    }
+
     public void resume() throws IOException, JavaLayerException {
         paused = false;
         musicFile = new FileInputStream(address);
