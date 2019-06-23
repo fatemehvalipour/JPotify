@@ -13,6 +13,7 @@ public class PlayList extends Library{
         this.removable = removable;
         this.nameChange = nameChange;
         playListMusics = new ArrayList<>();
+        playLists.add(this);
     }
 
     public void addMusic(Music music){
