@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Music extends Library {
+    public static Music playingMusic = null;
+    public static boolean isPlaying = false;
+    private boolean isFavorite;
     private String address;
     private Mp3File mp3File;
     private Player player;
@@ -153,6 +156,15 @@ public class Music extends Library {
     public void setPaused(boolean paused) {
         this.paused = paused;
     }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
 
     @Override
     public String toString() {

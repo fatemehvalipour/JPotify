@@ -1,5 +1,7 @@
 package Graphic.Containers;
 
+import Graphic.Listeners.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -23,18 +25,23 @@ public class PlayBoxPanel extends JPanel{
             playButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("play.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             playButton.setBackground(Color.black);
             playButton.setPreferredSize(new Dimension(100, 100));
+            playButton.addMouseListener(new PlayButtonListener());
             nextButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("next.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             nextButton.setPreferredSize(new Dimension(100, 100));
+            nextButton.addMouseListener(new NextButtonListener());
             nextButton.setBackground(Color.black);
             previousButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("previous.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             previousButton.setPreferredSize(new Dimension(100, 100));
             previousButton.setBackground(Color.black);
+            previousButton.addMouseListener(new PreviousButtonListener());
             likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heartBlue.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             likeButton.setPreferredSize(new Dimension(100, 100));
             likeButton.setBackground(Color.black);
+            likeButton.addMouseListener(new LikeButtonListener());
             shuffleButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("shuffle.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             shuffleButton.setPreferredSize(new Dimension(100, 100));
             shuffleButton.setBackground(Color.black);
+            shuffleButton.addMouseListener(new ShuffleButtonListener());
 
         } catch (Exception ex) {
             System.out.println(ex);
