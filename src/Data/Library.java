@@ -5,8 +5,9 @@ import Graphic.Graphic;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 
-public abstract class Library extends JPanel{
+public abstract class Library implements Serializable {
     protected Image image;
     protected String name;
     protected static Graphic graphic;

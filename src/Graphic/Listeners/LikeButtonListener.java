@@ -17,8 +17,8 @@ public class LikeButtonListener implements MouseListener {
         if (!Music.playingMusic.isFavorite()) {
             try {
                 PlayList.getPlayLists().get(0).addMusic(Music.playingMusic);
-            } catch (IOException e1) {
-                e1.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
             Music.playingMusic.setFavorite(true);
             JButton like = (JButton) e.getSource();
