@@ -1,8 +1,6 @@
 package Data;
 
-import Graphic.Listeners.ShowListener;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.Serializable;
