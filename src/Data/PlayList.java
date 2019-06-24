@@ -63,4 +63,8 @@ public class PlayList extends Library implements Serializable {
     public Image getAlbumArt() throws IOException {
         return image;
     }
+
+    public static void setPlayLists(ArrayList<Library> playLists) {
+        PlayList.playLists = playLists;
+    }
 }

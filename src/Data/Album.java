@@ -58,4 +58,8 @@ public class Album extends Library implements Serializable {
     public Image getAlbumArt() throws IOException {
         return image;
     }
+
+    public static void setAlbums(ArrayList<Library> albums) {
+        Album.albums = albums;
+    }
 }

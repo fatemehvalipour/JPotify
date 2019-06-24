@@ -10,24 +10,25 @@ import java.io.IOException;
 public class PlayButtonListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (Music.isPlaying){
-            Music.playingMusic.pause();
-            Music.isPlaying = false;
-        } else {
-            try {
-                if (Music.playingMusic.isPaused()){
-                    Music.playingMusic.resume();
-                } else {
-                    Music.playingMusic.play();
+        if (Music.playingMusic != null) {
+            if (Music.isPlaying) {
+                Music.playingMusic.pause();
+                Music.isPlaying = false;
+            } else {
+                try {
+                    if (Music.playingMusic.isPaused()) {
+                        Music.playingMusic.resume();
+                    } else {
+                        Music.playingMusic.play();
+                    }
+                    Music.isPlaying = true;
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (JavaLayerException ex) {
+                    ex.printStackTrace();
                 }
-                Music.isPlaying = true;
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (JavaLayerException ex) {
-                ex.printStackTrace();
             }
         }
-
     }
 
     @Override

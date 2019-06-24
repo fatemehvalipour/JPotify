@@ -169,7 +169,8 @@ public class Graphic {
                 nameBtn.setPreferredSize(new Dimension(200, 40));
                 musicPanel.add(nameBtn);
                 if (add && i == 0){
-                    j++;
+                    add = false;
+                    continue;
                 }
                 centerGridBagPanel.getGbc().gridx = j;
                 centerGridBagPanel.getGbc().gridy = i;

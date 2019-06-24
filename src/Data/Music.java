@@ -181,4 +181,8 @@ public class Music extends Library implements Serializable {
             estimatedTime++;
         }
     }
+
+    public static void setMusics(ArrayList<Library> musics) {
+        Music.musics = musics;
+    }
 }
