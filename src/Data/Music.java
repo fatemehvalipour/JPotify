@@ -15,7 +15,7 @@ import java.util.TimerTask;
 
 public class Music extends Library implements Serializable {
     //TODO make the public key word to private
-    public static Music playingMusic = null;
+    public static volatile Music playingMusic = null;
     public static boolean isPlaying = false;
     private boolean isFavorite;
     private String address;

@@ -15,9 +15,9 @@ public class PlayMusicListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (Music.playingMusic != null) {
             Music.playingMusic.stop();
+            Library.getGraphic().removeAlbumArt();
+            Library.getGraphic().removeNameOfSong();
         }
-        Library.getGraphic().removeAlbumArt();
-        Library.getGraphic().removeNameOfSong();
         for (Library music : Music.getMusics()) {
             if(((JButton) e.getSource()).getText().equals("<html>" + ((Music)music).getTitle() + "<br>" + ((Music) music).getArtist() + "</html>")){
                 try {

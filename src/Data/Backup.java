@@ -1,19 +1,22 @@
 package Data;
 
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.io.*;
+import java.util.Scanner;
 
 public class Backup {
-    private static ObjectInputStream objectInputStream;
-    private static ObjectOutputStream objectOutputStream;
+    private static Scanner scanner;
+    private static FileWriter fileWriter;
 
     public static void save(){
         try {
-            objectOutputStream = new ObjectOutputStream(new DataOutputStream(new FileOutputStream("save.sv")));
-            objectOutputStream.writeObject(Music.getMusics());
-            objectOutputStream.writeObject(Album.getAlbums());
-            objectOutputStream.writeObject(PlayList.getPlayLists());
+            fileWriter = new FileWriter("D:\\JPotify\\save.txt");
+            for (Library music : Music.getMusics()){
+                fileWriter.write(((Music)music).getAddress() + "\n");
+            }
+            fileWriter.close();
         } catch (IOException e) {
             System.out.println("can't save the files");
         }
@@ -21,14 +24,18 @@ public class Backup {
 
     public static void load(){
         try {
-            objectInputStream = new ObjectInputStream(new DataInputStream(new FileInputStream("save.sv")));
-            Music.setMusics((ArrayList<Library>) objectInputStream.readObject());
-            Album.setAlbums((ArrayList<Library>) objectInputStream.readObject());
-            PlayList.setPlayLists((ArrayList<Library>) objectInputStream.readObject());
-
+            scanner = new Scanner(new File("D:\\JPotify\\save.txt"));
+            while (scanner.hasNext()){
+                String address = scanner.nextLine();
+                Music music = new Music(address);
+                Album.addMusicToAlbum(music);
+            }
+            scanner.close();
         } catch (IOException e) {
+            System.out.println("There is no file with that name");
+        } catch (InvalidDataException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (UnsupportedTagException e) {
             e.printStackTrace();
         }
     }

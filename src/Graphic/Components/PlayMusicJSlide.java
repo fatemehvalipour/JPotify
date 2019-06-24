@@ -19,16 +19,25 @@ public class PlayMusicJSlide extends JPanel {
         playSlider = new JSlider(0, 100);
         playSlider.setBackground(Color.black);
         add(playSlider);
-        wholeTime = new JLabel("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
+        if (Music.playingMusic != null) {
+            wholeTime = new JLabel("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
+        } else {
+            wholeTime = new JLabel("0:0");
+        }
         timePlayed = new JLabel("0:0");
         new Thread(){
             @Override
             public void run() {
+                Music nowMusic = Music.playingMusic;
                 while (true) {
+                    if (Music.playingMusic == null){
+                        continue;
+                    }
                     playSlider.setValue((int)((((double) Music.playingMusic.getEstimatedTime()) / ((double) Music.playingMusic.getDuration())) * 100));
                     timePlayed.setText("" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
-                    if (Music.playingMusic == null){
-                        break;
+                    if (!Music.playingMusic.equals(nowMusic)){
+                        nowMusic = Music.playingMusic;
+                        wholeTime.setText("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
                     }
                     if (Music.playingMusic.getEstimatedTime() == Music.playingMusic.getDuration()){
                         break;

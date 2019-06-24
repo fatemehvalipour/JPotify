@@ -1,3 +1,4 @@
+import Data.Backup;
 import Data.Library;
 import Data.Music;
 import Data.PlayList;
@@ -12,10 +13,8 @@ public class Main {
     public static void main(String[] args) throws IOException, InvalidDataException, UnsupportedTagException, InterruptedException {
         PlayList favoritePlaylist = new PlayList("Favorite", false, false);
         PlayList sharedPlaylist = new PlayList("Shared", false, false);
-        Music.playingMusic = new Music("C:\\Users\\Korosh\\Downloads\\Music\\Roozbeh Bemani - Yani Tamoom.mp3");
+        Backup.load();
         Graphic graphic = new Graphic();
         Library.setGraphic(graphic);
-        graphic.setAlbumArt(Music.playingMusic);
-        graphic.setNameOfSong(Music.playingMusic);
     }
 }
