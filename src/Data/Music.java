@@ -8,15 +8,12 @@ import javazoom.jl.player.Player;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Music extends Library {
+public class Music extends Library implements Serializable {
     //TODO make the public key word to private
     public static Music playingMusic = null;
     public static boolean isPlaying = false;
@@ -43,19 +40,6 @@ public class Music extends Library {
         pauseLocation = 0;
         mp3File = new Mp3File(address);
         musics.add(this);
-        setBackground(Color.BLACK);
-        setPreferredSize(new Dimension(200, 240));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JButton imageButton = new JButton(new ImageIcon(this.getAlbumArt().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
-        imageButton.setFocusable(false);
-        JLabel name = new JLabel("<html>" + this.getTitle() + "<br>" + this.getArtist() + "</html>",  SwingConstants.CENTER);
-        imageButton.setBackground(Color.BLACK);
-        imageButton.setPreferredSize(new Dimension(200, 200));
-        name.setBackground(Color.BLACK);
-        name.setPreferredSize(new Dimension(200, 10));
-        add(imageButton);
-        name.setVerticalAlignment(SwingConstants.CENTER);
-        add(name);
         //TODO exception handling
     }
 

@@ -2,9 +2,10 @@ package Data;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PlayList extends Library{
+public class PlayList extends Library implements Serializable {
     private ArrayList<Music> playListMusics;
     private static ArrayList<PlayList> playLists = new ArrayList<>();
     private boolean removable;
