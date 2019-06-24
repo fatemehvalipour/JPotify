@@ -18,6 +18,7 @@ public class PlayMusicJSlide extends JPanel {
         setBackground(Color.black);
         playSlider = new JSlider(0, 100);
         playSlider.setBackground(Color.black);
+        playSlider.setValue(0);
         add(playSlider);
         if (Music.playingMusic != null) {
             wholeTime = new JLabel("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
@@ -34,7 +35,15 @@ public class PlayMusicJSlide extends JPanel {
                         continue;
                     }
                     playSlider.setValue((int)((((double) Music.playingMusic.getEstimatedTime()) / ((double) Music.playingMusic.getDuration())) * 100));
-                    timePlayed.setText("" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
+                    if ((Music.playingMusic.getEstimatedTime() / 60) > 9 && (Music.playingMusic.getEstimatedTime() % 60) > 9) {
+                        timePlayed.setText("" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
+                    } else if ((Music.playingMusic.getEstimatedTime() / 60) < 10 && (Music.playingMusic.getEstimatedTime() % 60) < 10){
+                        timePlayed.setText("0" + (Music.playingMusic.getEstimatedTime() / 60) + ":0" + (Music.playingMusic.getEstimatedTime() % 60));
+                    } else if ((Music.playingMusic.getEstimatedTime() / 60) > 9 && (Music.playingMusic.getEstimatedTime() % 60) < 10){
+                        timePlayed.setText("" + (Music.playingMusic.getEstimatedTime() / 60) + ":0" + (Music.playingMusic.getEstimatedTime() % 60));
+                    } else {
+                        timePlayed.setText("0" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
+                    }
                     if (!Music.playingMusic.equals(nowMusic)){
                         nowMusic = Music.playingMusic;
                         wholeTime.setText("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
