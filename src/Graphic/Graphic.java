@@ -43,7 +43,6 @@ public class Graphic {
     private JLabel albumArt;
     private JLabel nameOfMusic;
     private JLabel libraries;
-    private Music playingMusic;
 
 
     public Graphic() throws IOException {
@@ -137,15 +136,17 @@ public class Graphic {
                 if(libraries.get(count) instanceof Music){
                     nameBtn = new JButton("<html>" + ((Music) libraries.get(count)).getTitle() +
                             "<br>" + ((Music) libraries.get(count)).getArtist() + "</html>");
+                } else if (libraries.get(count) instanceof Album){
+                    nameBtn = new JButton("" + ((Album)libraries.get(count)).getAlbumName());
+                    nameBtn.addMouseListener(new ShowListener(this));
                 } else {
-                    nameBtn = new JButton("" + libraries.get(count).getName());
+                    nameBtn = new JButton("" + ((PlayList)libraries.get(count)).getPlayListName());
+                    nameBtn.addMouseListener(new ShowListener(this));
                 }
                 nameBtn.setBackground(Color.black);
                 nameBtn.setForeground(Color.white);
-                nameBtn.setPreferredSize(new Dimension(200, 10));
+                nameBtn.setPreferredSize(new Dimension(200, 40));
                 musicPanel.add(nameBtn);
-
-
                 centerGridBagPanel.getGbc().gridx = j;
                 centerGridBagPanel.getGbc().gridy = i;
                 centerGridBagPanel.add(musicPanel, centerGridBagPanel.getGbc());

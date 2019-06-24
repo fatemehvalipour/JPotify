@@ -40,6 +40,10 @@ public class PlayList extends Library{
         this.name = name;
     }
 
+    public String getPlayListName(){
+        return name;
+    }
+
     public void renamePlayList(PlayList playList, String newName){
         if (nameChange){
             playList.setPlayListName(newName);

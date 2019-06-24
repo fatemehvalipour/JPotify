@@ -20,7 +20,7 @@ public class ShowListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         try {
-            if (e.getSource() instanceof JButton && (((JButton) e.getSource()).getIcon() == null)) {
+            if (e.getSource() instanceof JButton && ((((JButton) e.getSource()).getText().equals("Music")) || (((JButton)e.getSource()).getText().equals("Albums")))) {
                 if (((JButton) e.getSource()).getText().equals("Music")) {
                     graphic.showLibrary(Music.getMusics());
                 } else {
@@ -28,7 +28,9 @@ public class ShowListener implements MouseListener {
                 }
             } else {
                 for (Library album : Album.getAlbums()) {
+                    System.out.println("first");
                     if (((Album) album).getAlbumName().equals(((JButton) e.getSource()).getText())) {
+                        System.out.println("sec");
                         graphic.showLibrary(((Album) album).getMusics());
                         return;
                     }
