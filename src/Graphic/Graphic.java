@@ -29,7 +29,7 @@ public class Graphic {
     private BorderPanel northBorderPanel;
     private BorderPanel southBorderPanel;
     private SearchPanel searchPanel;
-    private GridPanel centerGridPanel;
+    private GridBagPanel centerGridBagPanel;
     private GridPanel eastGridPanel;
     private GridPanel westGridPanel;
     private PlayBoxPanel playBoxPanel;
@@ -55,10 +55,9 @@ public class Graphic {
         eastBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.EAST);
         westBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.WEST);
         southBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.SOUTH);
-        centerGridPanel = new GridPanel(centerBorderPanel, 4, BorderLayout.NORTH);
+        centerGridBagPanel = new GridBagPanel(centerBorderPanel);
         eastGridPanel = new GridPanel(eastBorderPanel, 1, BorderLayout.NORTH);
         westGridPanel = new GridPanel(westBorderPanel, 1, BorderLayout.NORTH);
-        centerGridPanel = new GridPanel(centerBorderPanel, 4, BorderLayout.NORTH);
         southCenterBoxPanel = new BoxPanel(BoxLayout.Y_AXIS);
         playBoxPanel = new PlayBoxPanel();
         southCenterBoxPanel.add(playBoxPanel);
@@ -75,6 +74,7 @@ public class Graphic {
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
         voiceSlider = new VoiceJSlide(southBorderPanel, 0, 100);
+        voiceSlider.setGain(0.0f);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
         libraries = new JLabel("Libraries");
@@ -113,12 +113,24 @@ public class Graphic {
     }
 
     public void showLibrary(ArrayList<Library> libraries) {
-        centerGridPanel.removeAll();
-        centerGridPanel.revalidate();
-        for (Library library : libraries) {
-            centerGridPanel.add(library);
+        centerGridBagPanel.removeAll();
+        centerGridBagPanel.revalidate();
+        int count = 0;
+        centerGridBagPanel.getGbc().insets = new Insets(20, 20 , 20 , 20);
+        for (int i = 0; i < (int)((libraries.size()/4)+1); i++){
+            for (int j = 0; j < 4; j++){
+                if (count == libraries.size()){
+                    centerGridBagPanel.repaint();
+                    return;
+                }
+                System.out.println("" + i + ":" + j);
+                centerGridBagPanel.getGbc().gridx = j;
+                centerGridBagPanel.getGbc().gridy = i;
+                centerGridBagPanel.add(libraries.get(count), centerGridBagPanel.getGbc());
+                count++;
+            }
         }
-        centerGridPanel.repaint();
+        centerGridBagPanel.repaint();
     }
 
     public void showPlayList(ArrayList<PlayList> playLists) {

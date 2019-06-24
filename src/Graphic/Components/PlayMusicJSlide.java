@@ -18,9 +18,6 @@ public class PlayMusicJSlide extends JPanel {
         setBackground(Color.black);
         playSlider = new JSlider(0, 100);
         playSlider.setBackground(Color.black);
-        playSlider.setPaintTrack(true);
-        playSlider.setPaintTicks(true);
-        playSlider.setPaintLabels(true);
         add(playSlider);
         wholeTime = new JLabel("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
         timePlayed = new JLabel("0:0");

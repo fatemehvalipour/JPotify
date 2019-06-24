@@ -5,6 +5,7 @@ import Graphic.Graphic;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
+import javax.sound.sampled.FloatControl;
 import java.io.IOException;
 
 public class Main {
@@ -16,9 +17,5 @@ public class Main {
         Library.setGraphic(graphic);
         graphic.setAlbumArt(Music.playingMusic);
         graphic.setNameOfSong(Music.playingMusic);
-        while (true){
-            System.out.println(Music.playingMusic.getEstimatedTime());
-            Thread.sleep(1000);
-        }
     }
 }
