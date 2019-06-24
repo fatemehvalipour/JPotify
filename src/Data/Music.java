@@ -3,6 +3,7 @@ package Data;
 import Graphic.Listeners.PlayMusicListener;
 import com.mpatric.mp3agic.*;
 import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.JavaSoundAudioDevice;
 import javazoom.jl.player.Player;
 
 import javax.imageio.ImageIO;
@@ -145,6 +146,9 @@ public class Music extends Library implements Serializable {
             }
         }
     }
+
+
+
 
     public long getDuration(){
         return mp3File.getLengthInSeconds();
