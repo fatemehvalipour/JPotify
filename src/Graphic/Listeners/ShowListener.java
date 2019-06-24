@@ -21,7 +21,8 @@ public class ShowListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         try {
-            if (e.getSource() instanceof JButton && ((((JButton) e.getSource()).getText().equals("Music")) || (((JButton)e.getSource()).getText().equals("Albums")))) {
+            if (e.getSource() instanceof JButton && ((((JButton) e.getSource()).getText().equals("Music")) || (((JButton)e.getSource()).getText().equals("Albums")) || (((JButton)e.getSource()).getText().equals("PlayList")))) {
+                System.out.println(1);
                 if (((JButton) e.getSource()).getText().equals("Music")) {
                     graphic.showLibrary(Music.getMusics(), false);
                 } else if (((JButton) e.getSource()).getText().equals("Albums")){

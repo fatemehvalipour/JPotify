@@ -70,8 +70,7 @@ public class Graphic {
         mainBorderPanel.add(searchPanel, BorderLayout.PAGE_START);
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
-        voiceSlider = new VoiceJSlide(southBorderPanel, 0, 100);
-        //voiceSlider.setGain(0.5f);
+        voiceSlider = new VoiceJSlide(southBorderPanel, -1000, 0);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
         libraries = new JLabel("Libraries");
@@ -83,6 +82,7 @@ public class Graphic {
         albumButton = new ListButton(westGridPanel, "Albums");
         albumButton.addMouseListener(new ShowListener(this));
         playListButton = new ListButton(westGridPanel, "PlayList");
+        playListButton.addMouseListener(new ShowListener(this));
         playMusicJSlider = new PlayMusicJSlide();
         southCenterBoxPanel.add(playMusicJSlider);
         mainFrame.setVisible(true);

@@ -186,6 +186,10 @@ public class Music extends Library implements Serializable {
         }
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public static void setMusics(ArrayList<Library> musics) {
         Music.musics = musics;
     }
