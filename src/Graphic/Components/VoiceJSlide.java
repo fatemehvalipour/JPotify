@@ -22,29 +22,29 @@ public class VoiceJSlide extends JSlider {
         borderPanel.add(this, BorderLayout.EAST);
     }
 
-    public void setGain(float ctrl)
-    {
-        try {
-            Mixer.Info[] infos = AudioSystem.getMixerInfo();
-            for (Mixer.Info info: infos)
-            {
-                Mixer mixer = AudioSystem.getMixer(info);
-                if (mixer.isLineSupported(Port.Info.SPEAKER))
-                {
-                    Port port = (Port)mixer.getLine(Port.Info.SPEAKER);
-                    port.open();
-                    if (port.isControlSupported(FloatControl.Type.VOLUME))
-                    {
-                        FloatControl volume =  (FloatControl)port.getControl(FloatControl.Type.VOLUME);
-                        System.out.println("max" + volume.getMaximum());
-                        System.out.println("min" + volume.getMinimum());
-                        volume.setValue((float) (Math.log(ctrl)/ Math.log(10.0) * 20.0));
-                    }
-                    port.close();
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Erro\n"+e);
-        }
-    }
+//    public void setGain(float ctrl)
+//    {
+//        try {
+//            Mixer.Info[] infos = AudioSystem.getMixerInfo();
+//            for (Mixer.Info info: infos)
+//            {
+//                Mixer mixer = AudioSystem.getMixer(info);
+//                if (mixer.isLineSupported(Port.Info.SPEAKER))
+//                {
+//                    Port port = (Port)mixer.getLine(Port.Info.SPEAKER);
+//                    port.open();
+//                    if (port.isControlSupported(FloatControl.Type.VOLUME))
+//                    {
+//                        FloatControl volume =  (FloatControl)port.getControl(FloatControl.Type.VOLUME);
+//                        System.out.println("max" + volume.getMaximum());
+//                        System.out.println("min" + volume.getMinimum());
+//                        volume.setValue((float) (Math.log(ctrl)/ Math.log(10.0) * 20.0));
+//                    }
+//                    port.close();
+//                }
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null,"Erro\n"+e);
+//        }
+//    }
 }

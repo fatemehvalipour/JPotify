@@ -1,7 +1,7 @@
 package Data;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Backup {
     private static ObjectInputStream objectInputStream;
@@ -12,6 +12,16 @@ public class Backup {
     }
 
     public static void load(){
+        try {
+            objectInputStream = new ObjectInputStream(new DataInputStream(new FileInputStream("save.sv")));
+            Music.setMusics((ArrayList<Library>) objectInputStream.readObject());
+            Album.setAlbums((ArrayList<Library>) objectInputStream.readObject());
+            PlayList.setPlayLists((ArrayList<Library>) objectInputStream.readObject());
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

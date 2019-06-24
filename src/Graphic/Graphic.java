@@ -71,7 +71,7 @@ public class Graphic {
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
         voiceSlider = new VoiceJSlide(southBorderPanel, 0, 100);
-        voiceSlider.setGain(0.5f);
+        //voiceSlider.setGain(0.5f);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
         libraries = new JLabel("Libraries");
