@@ -1,8 +1,11 @@
 package Graphic.Listeners;
 
+import Data.Library;
 import Data.Music;
+import Graphic.Graphic;
 import javazoom.jl.decoder.JavaLayerException;
 
+import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -10,13 +13,21 @@ import java.io.IOException;
 public class PlayMusicListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getSource() instanceof Music){
-            try {
-                ((Music) e.getSource()).play();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (JavaLayerException ex) {
-                ex.printStackTrace();
+        Music.playingMusic.stop();
+        Library.getGraphic().removeAlbumArt();
+        Library.getGraphic().removeNameOfSong();
+        for (Library music : Music.getMusics()) {
+            if(((JButton) e.getSource()).getText().equals("<html>" + ((Music)music).getTitle() + "<br>" + ((Music) music).getArtist() + "</html>")){
+                try {
+                    Music.playingMusic = (Music) music;
+                    Library.getGraphic().setNameOfSong(Music.playingMusic);
+                    Library.getGraphic().setAlbumArt(Music.playingMusic);
+                    Music.playingMusic.play();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (JavaLayerException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
