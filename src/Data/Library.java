@@ -4,8 +4,9 @@ import Graphic.Graphic;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
-public class Library extends JPanel {
+public abstract class Library extends JPanel{
     protected Image image;
     protected String name;
     protected static Graphic graphic;
@@ -17,4 +18,6 @@ public class Library extends JPanel {
     public static Graphic getGraphic() {
         return graphic;
     }
+
+    public abstract Image getAlbumArt() throws IOException;
 }

@@ -74,7 +74,7 @@ public class Graphic {
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
         voiceSlider = new VoiceJSlide(southBorderPanel, 0, 100);
-        voiceSlider.setGain(0.0f);
+        voiceSlider.setGain(0.5f);
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
         libraries = new JLabel("Libraries");
@@ -112,7 +112,11 @@ public class Graphic {
         albumArt.setIcon(null);
     }
 
-    public void showLibrary(ArrayList<Library> libraries) {
+    public void removeNameOfSong(){
+        nameOfMusic.setText("");
+    }
+
+    public void showLibrary(ArrayList<Library> libraries) throws IOException {
         centerGridBagPanel.removeAll();
         centerGridBagPanel.revalidate();
         int count = 0;
@@ -123,14 +127,31 @@ public class Graphic {
                     centerGridBagPanel.repaint();
                     return;
                 }
-                System.out.println("" + i + ":" + j);
+                JPanel musicPanel = new JPanel();
+                musicPanel.setLayout(new BoxLayout(musicPanel, BoxLayout.Y_AXIS));
+                musicPanel.setBackground(Color.black);
+                JLabel imageLabel = new JLabel(new ImageIcon(libraries.get(count).getAlbumArt().getScaledInstance(200,200, Image.SCALE_SMOOTH)));
+                imageLabel.setPreferredSize(new Dimension(200, 200));
+                musicPanel.add(imageLabel);
+                JButton nameBtn;
+                if(libraries.get(count) instanceof Music){
+                    nameBtn = new JButton("<html>" + ((Music) libraries.get(count)).getTitle() +
+                            "<br>" + ((Music) libraries.get(count)).getArtist() + "</html>");
+                } else {
+                    nameBtn = new JButton("" + libraries.get(count).getName());
+                }
+                nameBtn.setBackground(Color.black);
+                nameBtn.setForeground(Color.white);
+                nameBtn.setPreferredSize(new Dimension(200, 10));
+                musicPanel.add(nameBtn);
+
+
                 centerGridBagPanel.getGbc().gridx = j;
                 centerGridBagPanel.getGbc().gridy = i;
-                centerGridBagPanel.add(libraries.get(count), centerGridBagPanel.getGbc());
+                centerGridBagPanel.add(musicPanel, centerGridBagPanel.getGbc());
                 count++;
             }
         }
-        centerGridBagPanel.repaint();
     }
 
     public void showPlayList(ArrayList<PlayList> playLists) {

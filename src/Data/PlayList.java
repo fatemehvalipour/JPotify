@@ -1,5 +1,7 @@
 package Data;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlayList extends Library{
@@ -16,8 +18,11 @@ public class PlayList extends Library{
         playLists.add(this);
     }
 
-    public void addMusic(Music music){
+    public void addMusic(Music music) throws IOException {
         playListMusics.add(music);
+        if (playListMusics.indexOf(music) == 0){
+            image = music.getAlbumArt();
+        }
     }
 
     public void removeMusic(Music music){
@@ -43,5 +48,10 @@ public class PlayList extends Library{
 
     public static ArrayList<PlayList> getPlayLists() {
         return playLists;
+    }
+
+    @Override
+    public Image getAlbumArt() throws IOException {
+        return image;
     }
 }

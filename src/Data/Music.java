@@ -1,5 +1,6 @@
 package Data;
 
+import Graphic.Listeners.PlayMusicListener;
 import com.mpatric.mp3agic.*;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
@@ -55,7 +56,6 @@ public class Music extends Library {
         add(imageButton);
         name.setVerticalAlignment(SwingConstants.CENTER);
         add(name);
-        estimatedTime = 0;
         //TODO exception handling
     }
 
@@ -84,6 +84,7 @@ public class Music extends Library {
         return null;
     }
 
+    @Override
     public Image getAlbumArt() throws IOException {
         if (mp3File.hasId3v2Tag()){
             ID3v2 tag = mp3File.getId3v2Tag();

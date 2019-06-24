@@ -8,6 +8,7 @@ import Graphic.Graphic;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class ShowListener implements MouseListener {
     private Graphic graphic;
@@ -18,19 +19,23 @@ public class ShowListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource() instanceof JButton && (((JButton) e.getSource()).getIcon() == null)){
-            if (((JButton)e.getSource()).getText().equals("Music")){
-                graphic.showLibrary(Music.getMusics());
+        try {
+            if (e.getSource() instanceof JButton && (((JButton) e.getSource()).getIcon() == null)) {
+                if (((JButton) e.getSource()).getText().equals("Music")) {
+                    graphic.showLibrary(Music.getMusics());
+                } else {
+                    graphic.showLibrary(Album.getAlbums());
+                }
             } else {
-                graphic.showLibrary(Album.getAlbums());
-            }
-        } else {
-            for (Library album : Album.getAlbums()){
-                if (((Album)album).getAlbumName().equals(((JButton)e.getSource()).getText())){
-                    graphic.showLibrary(((Album)album).getMusics());
-                    return;
+                for (Library album : Album.getAlbums()) {
+                    if (((Album) album).getAlbumName().equals(((JButton) e.getSource()).getText())) {
+                        graphic.showLibrary(((Album) album).getMusics());
+                        return;
+                    }
                 }
             }
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 

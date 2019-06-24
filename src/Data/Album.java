@@ -74,4 +74,9 @@ public class Album extends Library {
     public JButton getImageButton() {
         return imageButton;
     }
+
+    @Override
+    public Image getAlbumArt() throws IOException {
+        return image;
+    }
 }
