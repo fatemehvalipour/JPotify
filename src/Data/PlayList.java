@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class PlayList extends Library implements Serializable {
-    private ArrayList<Music> playListMusics;
-    private static ArrayList<PlayList> playLists = new ArrayList<>();
+    private ArrayList<Library> playListMusics;
+    private static ArrayList<Library> playLists = new ArrayList<>();
     private boolean removable;
     private boolean nameChange;
 
@@ -51,8 +51,12 @@ public class PlayList extends Library implements Serializable {
         }
     }
 
-    public static ArrayList<PlayList> getPlayLists() {
+    public static ArrayList<Library> getPlayLists() {
         return playLists;
+    }
+
+    public ArrayList<Library> getPlayListMusics() {
+        return playListMusics;
     }
 
     @Override

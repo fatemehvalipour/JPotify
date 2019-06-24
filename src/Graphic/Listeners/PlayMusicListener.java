@@ -13,12 +13,15 @@ import java.io.IOException;
 public class PlayMusicListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
-        Music.playingMusic.stop();
+        if (Music.playingMusic != null) {
+            Music.playingMusic.stop();
+        }
         Library.getGraphic().removeAlbumArt();
         Library.getGraphic().removeNameOfSong();
         for (Library music : Music.getMusics()) {
             if(((JButton) e.getSource()).getText().equals("<html>" + ((Music)music).getTitle() + "<br>" + ((Music) music).getArtist() + "</html>")){
                 try {
+                    Music.isPlaying = true;
                     Music.playingMusic = (Music) music;
                     Library.getGraphic().setNameOfSong(Music.playingMusic);
                     Library.getGraphic().setAlbumArt(Music.playingMusic);

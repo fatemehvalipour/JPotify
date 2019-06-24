@@ -40,6 +40,7 @@ public class Music extends Library implements Serializable {
         pauseLocation = 0;
         mp3File = new Mp3File(address);
         musics.add(this);
+        timer = new Timer();
         //TODO exception handling
     }
 

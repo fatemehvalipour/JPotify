@@ -16,7 +16,7 @@ public class LikeButtonListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (!Music.playingMusic.isFavorite()) {
             try {
-                PlayList.getPlayLists().get(0).addMusic(Music.playingMusic);
+                ((PlayList)PlayList.getPlayLists().get(0)).addMusic(Music.playingMusic);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -29,7 +29,7 @@ public class LikeButtonListener implements MouseListener {
                 ex.printStackTrace();
             }
         } else {
-            PlayList.getPlayLists().get(0).removeMusic(Music.playingMusic);
+            ((PlayList)PlayList.getPlayLists().get(0)).removeMusic(Music.playingMusic);
             Music.playingMusic.setFavorite(false);
             JButton Like = (JButton) e.getSource();
             try {

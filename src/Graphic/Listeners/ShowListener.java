@@ -3,6 +3,7 @@ package Graphic.Listeners;
 import Data.Album;
 import Data.Library;
 import Data.Music;
+import Data.PlayList;
 import Graphic.Graphic;
 
 import javax.swing.*;
@@ -22,16 +23,22 @@ public class ShowListener implements MouseListener {
         try {
             if (e.getSource() instanceof JButton && ((((JButton) e.getSource()).getText().equals("Music")) || (((JButton)e.getSource()).getText().equals("Albums")))) {
                 if (((JButton) e.getSource()).getText().equals("Music")) {
-                    graphic.showLibrary(Music.getMusics());
+                    graphic.showLibrary(Music.getMusics(), false);
+                } else if (((JButton) e.getSource()).getText().equals("Albums")){
+                    graphic.showLibrary(Album.getAlbums(), false);
                 } else {
-                    graphic.showLibrary(Album.getAlbums());
+                    graphic.showLibrary(PlayList.getPlayLists(), true);
                 }
             } else {
                 for (Library album : Album.getAlbums()) {
-                    System.out.println("first");
                     if (((Album) album).getAlbumName().equals(((JButton) e.getSource()).getText())) {
-                        System.out.println("sec");
-                        graphic.showLibrary(((Album) album).getMusics());
+                        graphic.showLibrary(((Album) album).getMusics(), false);
+                        return;
+                    }
+                }
+                for (Library playList : PlayList.getPlayLists()){
+                    if (((PlayList) playList).getPlayListName().equals(((JButton) e.getSource()).getText())) {
+                        graphic.showLibrary(((PlayList) playList).getPlayListMusics(), true);
                         return;
                     }
                 }

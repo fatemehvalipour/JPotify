@@ -27,6 +27,12 @@ public class PlayMusicJSlide extends JPanel {
                 while (true) {
                     playSlider.setValue((int)((((double) Music.playingMusic.getEstimatedTime()) / ((double) Music.playingMusic.getDuration())) * 100));
                     timePlayed.setText("" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
+                    if (Music.playingMusic == null){
+                        break;
+                    }
+                    if (Music.playingMusic.getEstimatedTime() == Music.playingMusic.getDuration()){
+                        break;
+                    }
                 }
             }
         }.start();

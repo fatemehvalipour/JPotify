@@ -5,8 +5,7 @@ import Graphic.Components.ListButton;
 import Graphic.Components.PlayMusicJSlide;
 import Graphic.Components.VoiceJSlide;
 import Graphic.Containers.*;
-import Graphic.Listeners.AddMusicListener;
-import Graphic.Listeners.ShowListener;
+import Graphic.Listeners.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -39,7 +38,6 @@ public class Graphic {
     private ListButton albumButton;
     private ListButton playListButton;
     private PlayMusicJSlide playMusicJSlider;
-    private ListButton add;
     private JLabel albumArt;
     private JLabel nameOfMusic;
     private JLabel libraries;
@@ -80,8 +78,6 @@ public class Graphic {
         westGridPanel.add(libraries);
         libraries.setFont(libraries.getFont().deriveFont(22.0f));
         libraries.setForeground(Color.white);
-        add = new ListButton(westGridPanel, "Add");
-        add.addMouseListener(new AddMusicListener());
         musicButton = new ListButton(westGridPanel, "Music");
         musicButton.addMouseListener(new ShowListener(this));
         albumButton = new ListButton(westGridPanel, "Albums");
@@ -115,9 +111,33 @@ public class Graphic {
         nameOfMusic.setText("");
     }
 
-    public void showLibrary(ArrayList<Library> libraries) throws IOException {
+    public void showLibrary(ArrayList<Library> libraries, boolean isPlayList) throws IOException {
         centerGridBagPanel.removeAll();
         centerGridBagPanel.revalidate();
+        JButton addButton = new JButton(new ImageIcon(ImageIO.read(getClass().getResource("plus.png")).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+        addButton.setBackground(Color.BLACK);
+        addButton.setBorder(null);
+        addButton.setPreferredSize(new Dimension(200, 200));
+        boolean add = false;
+        if (libraries.get(0) instanceof PlayList){
+            centerGridBagPanel.getGbc().gridy = 0;
+            centerGridBagPanel.getGbc().gridx = 0;
+            centerGridBagPanel.add(addButton, centerGridBagPanel.getGbc());
+            add = true;
+            addButton.addMouseListener(new AddPlayListListener());
+        } else if (libraries.get(0) instanceof Music && isPlayList){
+            centerGridBagPanel.getGbc().gridy = 0;
+            centerGridBagPanel.getGbc().gridx = 0;
+            centerGridBagPanel.add(addButton, centerGridBagPanel.getGbc());
+            add = true;
+            addButton.addMouseListener(new AddMusicToPlayListListener());
+        } else if (libraries.get(0) instanceof Music && !isPlayList){
+            centerGridBagPanel.getGbc().gridy = 0;
+            centerGridBagPanel.getGbc().gridx = 0;
+            centerGridBagPanel.add(addButton, centerGridBagPanel.getGbc());
+            addButton.addMouseListener(new AddMusicListener());
+            add = true;
+        }
         int count = 0;
         centerGridBagPanel.getGbc().insets = new Insets(20, 20 , 20 , 20);
         for (int i = 0; i < (int)((libraries.size()/4)+1); i++){
@@ -136,6 +156,7 @@ public class Graphic {
                 if(libraries.get(count) instanceof Music){
                     nameBtn = new JButton("<html>" + ((Music) libraries.get(count)).getTitle() +
                             "<br>" + ((Music) libraries.get(count)).getArtist() + "</html>");
+                    nameBtn.addMouseListener(new PlayMusicListener());
                 } else if (libraries.get(count) instanceof Album){
                     nameBtn = new JButton("" + ((Album)libraries.get(count)).getAlbumName());
                     nameBtn.addMouseListener(new ShowListener(this));
@@ -147,6 +168,9 @@ public class Graphic {
                 nameBtn.setForeground(Color.white);
                 nameBtn.setPreferredSize(new Dimension(200, 40));
                 musicPanel.add(nameBtn);
+                if (add && i == 0){
+                    j++;
+                }
                 centerGridBagPanel.getGbc().gridx = j;
                 centerGridBagPanel.getGbc().gridy = i;
                 centerGridBagPanel.add(musicPanel, centerGridBagPanel.getGbc());
