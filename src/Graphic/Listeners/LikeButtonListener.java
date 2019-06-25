@@ -23,7 +23,7 @@ public class LikeButtonListener implements MouseListener {
             Music.playingMusic.setFavorite(true);
             JButton like = (JButton) e.getSource();
             try {
-                like.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heart.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+                like.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heart.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
 
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -33,7 +33,7 @@ public class LikeButtonListener implements MouseListener {
             Music.playingMusic.setFavorite(false);
             JButton Like = (JButton) e.getSource();
             try {
-                Like.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("..\\Containers\\heartBlue.png")).getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+                Like.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("..\\Containers\\heartBlue.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
 
             } catch (IOException ex) {
                 ex.printStackTrace();

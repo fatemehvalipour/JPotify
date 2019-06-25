@@ -24,6 +24,7 @@ public class Music extends Library implements Serializable {
     private Player player;
     private FileInputStream musicFile;
     public static boolean repeat = false;
+    public static boolean shuffle = false;
     //TODO change the icon if it is repeatable
     private boolean paused;
     private long pauseLocation;

@@ -11,9 +11,6 @@ public class StopButtonListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (Music.playingMusic != null){
             Music.playingMusic.stop();
-            Library.getGraphic().removeAlbumArt();
-            Library.getGraphic().removeNameOfSong();
-            Music.playingMusic = null;
             Music.isPlaying = false;
         }
     }

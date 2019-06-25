@@ -12,7 +12,7 @@ public class Backup {
 
     public static void save(){
         try {
-            fileWriter = new FileWriter("D:\\JPotify\\save.txt");
+            fileWriter = new FileWriter("save.txt");
             for (Library music : Music.getMusics()){
                 fileWriter.write(((Music)music).getAddress() + "\n");
             }
@@ -24,7 +24,7 @@ public class Backup {
 
     public static void load(){
         try {
-            scanner = new Scanner(new File("D:\\JPotify\\save.txt"));
+            scanner = new Scanner(new File("save.txt"));
             while (scanner.hasNext()){
                 String address = scanner.nextLine();
                 Music music = new Music(address);
