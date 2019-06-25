@@ -44,7 +44,7 @@ public class PlayMusicJSlide extends JPanel {
                     } else {
                         timePlayed.setText("0" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
                     }
-                    if (!Music.playingMusic.equals(nowMusic)){
+                    if (!Music.playingMusic.equals(nowMusic)){//TODO bad as stop chi mishe??
                         nowMusic = Music.playingMusic;
                         wholeTime.setText("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
                     }

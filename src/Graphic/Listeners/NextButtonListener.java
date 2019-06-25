@@ -1,12 +1,37 @@
 package Graphic.Listeners;
 
+import Data.Music;
+import javazoom.jl.decoder.JavaLayerException;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class NextButtonListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        int index = 0;
+        if (Music.playingMusic != null) {
+            for (int i = 0; i < Music.getMusics().size(); i++) {
+                if (Music.playingMusic.equals(Music.getMusics().get(i))) {
+                    if (i == Music.getMusics().size() - 1){
+                        index = 0;
+                    } else {
+                        index = i + 1;
+                    }
+                    break;
+                }
+            }
+            try {
+                Music.playingMusic.stop();
+                Music.playingMusic = (Music) (Music.getMusics().get(index));
+                ((Music) (Music.getMusics().get(index))).play();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (JavaLayerException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @Override

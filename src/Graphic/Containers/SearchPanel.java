@@ -17,6 +17,8 @@ public class SearchPanel extends JPanel {
         setBackground(Color.BLACK);
         searchBar = new JTextField("Search");
         searchBar.addActionListener(new SearchListener());
+        //searchBar.getAccessibleContext();
+        //searchBar.
         username = new JTextArea(user.getUserName());
         JPanel searchBox = new JPanel();
         searchBox.setBackground(Color.WHITE);

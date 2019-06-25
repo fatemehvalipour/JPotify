@@ -94,7 +94,7 @@ public class Music extends Library implements Serializable {
         totalSongLength = musicFile.available();
         player = new Player(musicFile);
         timer = new Timer();
-        timer.scheduleAtFixedRate(new estimatedTime(), 0, 1000);
+        timer.scheduleAtFixedRate(new estimatedTime(), 0, 1000);//TODO chera inja pak nakonim aks o ina ro??
         new Thread(() -> {
             try {
                 player.play();
