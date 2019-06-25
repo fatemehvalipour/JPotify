@@ -1,5 +1,6 @@
 package Graphic.Containers;
 
+import Data.Music;
 import Graphic.Listeners.*;
 
 import javax.imageio.ImageIO;
@@ -44,7 +45,11 @@ public class PlayBoxPanel extends JPanel{
             previousButton.addMouseListener(new PreviousButtonListener());
             previousButton.setBorder(null);
             previousButton.setFocusable(false);
-            likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heartBlue.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+            if(!Music.playingMusic.isFavorite()) {
+                likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heartBlue.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+            } else {
+                likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heart.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+            }
             likeButton.setPreferredSize(new Dimension(55, 55));
             likeButton.setBackground(Color.black);
             likeButton.setBorder(null);
