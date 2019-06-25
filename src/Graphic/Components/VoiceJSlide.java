@@ -13,7 +13,8 @@ import java.awt.*;
 public class VoiceJSlide extends JSlider {
     public VoiceJSlide(BorderPanel borderPanel, int min, int max) {
         super(min, max);
-        setPaintTicks(true);
+        setPaintTrack(true);
+        setPaintTicks(false);
         setPaintLabels(false);
         setMajorTickSpacing(200);
         setMinorTickSpacing(5);
