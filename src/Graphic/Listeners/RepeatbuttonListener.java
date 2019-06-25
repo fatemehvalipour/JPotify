@@ -2,6 +2,8 @@ package Graphic.Listeners;
 
 import Data.Music;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -11,10 +13,10 @@ public class RepeatbuttonListener implements MouseListener {
 
          if (Music.repeat) {
               Music.repeat = false;
-             System.out.println(false);
+             ((JButton)e.getSource()).setBackground(Color.BLACK);
          }  else {
              Music.repeat = true;
-             System.out.println(true);
+             ((JButton)e.getSource()).setBackground(Color.DARK_GRAY);
          }
 
     }

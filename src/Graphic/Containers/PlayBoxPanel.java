@@ -45,10 +45,11 @@ public class PlayBoxPanel extends JPanel{
             previousButton.addMouseListener(new PreviousButtonListener());
             previousButton.setBorder(null);
             previousButton.setFocusable(false);
-            if(!Music.playingMusic.isFavorite()) {
+            likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heartBlue.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+            if(Music.playingMusic != null && !Music.playingMusic.isFavorite()) {
                 likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heartBlue.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
             } else {
-                likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heart.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+                likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("..\\Listeners\\heart.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
             }
             likeButton.setPreferredSize(new Dimension(55, 55));
             likeButton.setBackground(Color.black);
@@ -60,6 +61,9 @@ public class PlayBoxPanel extends JPanel{
             shuffleButton.setBackground(Color.black);
             shuffleButton.setBorder(null);
             shuffleButton.setFocusable(false);
+            if (Music.shuffle){
+                shuffleButton.setBackground(Color.DARK_GRAY);
+            }
             shuffleButton.addMouseListener(new ShuffleButtonListener());
             stopButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("stop.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
             stopButton.setBackground(Color.black);
@@ -72,11 +76,14 @@ public class PlayBoxPanel extends JPanel{
             repeatButton.setBackground(Color.black);
             repeatButton.setBorder(null);
             repeatButton.setFocusable(false);
+            if (Music.repeat){
+                repeatButton.setBackground(Color.DARK_GRAY);
+            }
             repeatButton.setPreferredSize(new Dimension(55, 55));
             repeatButton.addMouseListener(new RepeatbuttonListener());
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
         }
     horizontalBox = Box.createHorizontalBox();
     horizontalBox.add(Box.createGlue());

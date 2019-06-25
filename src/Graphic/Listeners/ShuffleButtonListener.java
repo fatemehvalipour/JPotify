@@ -2,6 +2,8 @@ package Graphic.Listeners;
 
 import Data.Music;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
@@ -12,8 +14,10 @@ public class ShuffleButtonListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (Music.shuffle){
             Music.shuffle = false;
+            ((JButton)e.getSource()).setBackground(Color.BLACK);
         } else {
             Music.shuffle = true;
+            ((JButton)e.getSource()).setBackground(Color.DARK_GRAY);
         }
     }
 
