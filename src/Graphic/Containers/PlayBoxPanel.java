@@ -46,7 +46,7 @@ public class PlayBoxPanel extends JPanel{
             previousButton.setBorder(null);
             previousButton.setFocusable(false);
             likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heartBlue.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
-            if(Music.playingMusic != null && !Music.playingMusic.isFavorite()) {
+            if(Music.playingMusic == null || !Music.playingMusic.isFavorite()) {
                 likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heartBlue.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
             } else {
                 likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("..\\Listeners\\heart.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));

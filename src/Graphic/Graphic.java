@@ -9,6 +9,7 @@ import Graphic.Listeners.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,13 +72,15 @@ public class Graphic {
         libraries = new JLabel("Libraries");
         westGridPanel.add(libraries);
         libraries.setFont(libraries.getFont().deriveFont(22.0f));
-        libraries.setForeground(Color.white);
+        libraries.setForeground(Color.WHITE);
+        libraries.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
         musicButton = new ListButton(westGridPanel, "Music");
         musicButton.addMouseListener(new ShowListener(this));
         albumButton = new ListButton(westGridPanel, "Albums");
         albumButton.addMouseListener(new ShowListener(this));
         playListButton = new ListButton(westGridPanel, "PlayList");
         playListButton.addMouseListener(new ShowListener(this));
+        westGridPanel.add(Box.createGlue());
         playMusicJSlider = new PlayMusicJSlide();
         southCenterBoxPanel.add(playMusicJSlider);
         mainFrame.setVisible(true);
