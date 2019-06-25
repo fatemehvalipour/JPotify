@@ -11,8 +11,6 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException, InvalidDataException, UnsupportedTagException, InterruptedException {
-        PlayList favoritePlaylist = new PlayList("Favorite", false, false);
-        PlayList sharedPlaylist = new PlayList("Shared", false, false);
         Backup.load();
         Graphic graphic = new Graphic();
         Library.setGraphic(graphic);

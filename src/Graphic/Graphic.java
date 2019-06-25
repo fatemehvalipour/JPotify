@@ -114,6 +114,10 @@ public class Graphic {
     public void showLibrary(ArrayList<Library> libraries, boolean isPlayList) throws IOException {
         centerGridBagPanel.removeAll();
         centerGridBagPanel.revalidate();
+        if (libraries.size() == 0){
+            centerGridBagPanel.repaint();
+            return;
+        }
         JButton addButton = new JButton(new ImageIcon(ImageIO.read(getClass().getResource("plus.png")).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
         addButton.setBackground(Color.BLACK);
         addButton.setBorder(null);
