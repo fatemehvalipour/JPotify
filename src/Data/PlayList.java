@@ -1,5 +1,6 @@
 package Data;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.io.Serializable;
@@ -13,6 +14,17 @@ public class PlayList extends Library implements Serializable {
 
     public PlayList(String name, boolean removable , boolean nameChange) {
         this.name = name;
+        try {
+            if (name.equals("Favourite Songs")) {
+                image = ImageIO.read(getClass().getResource("favouritePlaylistIcon.png"));
+            } else if (name.equals("Shared Songs")) {
+                image = ImageIO.read(getClass().getResource("sharedPlaylistIcon.png"));
+            } else {
+                image = ImageIO.read(getClass().getResource("defualtPlaylistIcon.png"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.removable = removable;
         this.nameChange = nameChange;
         playListMusics = new ArrayList<>();
@@ -21,7 +33,7 @@ public class PlayList extends Library implements Serializable {
 
     public void addMusic(Music music) throws IOException {
         playListMusics.add(music);
-        if (playListMusics.indexOf(music) == 0){
+        if (playListMusics.indexOf(music) == 0 && !this.getPlayListName().equals("Favourite Songs") && !this.getPlayListName().equals("Shared Songs")){
             image = music.getAlbumArt();
         }
     }
