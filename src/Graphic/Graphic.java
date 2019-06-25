@@ -109,15 +109,26 @@ public class Graphic {
     public void showLibrary(ArrayList<Library> libraries, boolean isPlayList) throws IOException {
         centerGridBagPanel.removeAll();
         centerGridBagPanel.revalidate();
-        if (libraries.size() == 0){
-            centerGridBagPanel.repaint();
-            return;
-        }
         JButton addButton = new JButton(new ImageIcon(ImageIO.read(getClass().getResource("plus.png")).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
         addButton.setBackground(Color.BLACK);
         addButton.setBorder(null);
         addButton.setPreferredSize(new Dimension(200, 200));
         boolean add = false;
+        if (libraries.size() == 0){
+            if (isPlayList){
+                centerGridBagPanel.getGbc().gridy = 0;
+                centerGridBagPanel.getGbc().gridx = 0;
+                centerGridBagPanel.add(addButton, centerGridBagPanel.getGbc());
+                addButton.addMouseListener(new AddMusicToPlayListListener());
+            } else {
+                centerGridBagPanel.getGbc().gridy = 0;
+                centerGridBagPanel.getGbc().gridx = 0;
+                centerGridBagPanel.add(addButton, centerGridBagPanel.getGbc());
+                addButton.addMouseListener(new AddMusicListener());
+            }
+            centerGridBagPanel.repaint();
+            return;
+        }
         if (libraries.get(0) instanceof PlayList){
             centerGridBagPanel.getGbc().gridy = 0;
             centerGridBagPanel.getGbc().gridx = 0;
