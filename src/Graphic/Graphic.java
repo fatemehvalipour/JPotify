@@ -9,13 +9,8 @@ import Graphic.Listeners.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.metal.DefaultMetalTheme;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 
 //TODO check all the sizes plz
@@ -128,6 +123,7 @@ public class Graphic {
             centerGridBagPanel.getGbc().gridx = 0;
             centerGridBagPanel.add(addButton, centerGridBagPanel.getGbc());
             add = true;
+            System.out.println(123);
             addButton.addMouseListener(new AddPlayListListener());
         } else if (libraries.get(0) instanceof Music && isPlayList){
             centerGridBagPanel.getGbc().gridy = 0;
