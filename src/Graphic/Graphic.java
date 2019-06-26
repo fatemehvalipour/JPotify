@@ -83,8 +83,22 @@ public class Graphic {
         westGridPanel.add(Box.createGlue());
         playMusicJSlider = new PlayMusicJSlide();
         southCenterBoxPanel.add(playMusicJSlider);
+        JPanel friendButtonPanel = new JPanel();
+        friendButtonPanel.setLayout(new FlowLayout());
+        friendButtonPanel.setBackground(Color.BLACK);
+        JButton addFriendButton = new JButton(new ImageIcon(ImageIO.read(getClass().getResource("plus.png")).getScaledInstance(30, 30,Image.SCALE_SMOOTH)));
+        addFriendButton.setBackground(Color.BLACK);
+        addFriendButton.addMouseListener(new AddFriendListener());
+        addFriendButton.setBorder(null);
+        friendButtonPanel.add(addFriendButton);
+        friendButtonPanel.add(Box.createGlue());
+        JButton refreshButton = new JButton(new ImageIcon(ImageIO.read(getClass().getResource("..\\refresh.png")).getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
+        refreshButton.setBackground(Color.BLACK);
+        refreshButton.addMouseListener(new RefreshListener());
+        refreshButton.setBorder(null);
+        friendButtonPanel.add(refreshButton);
+        eastBorderPanel.add(friendButtonPanel, BorderLayout.PAGE_START);
         mainFrame.setVisible(true);
-
     }
 
     public void setAlbumArt(Music music) throws IOException {
