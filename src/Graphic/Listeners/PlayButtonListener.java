@@ -3,6 +3,9 @@ package Graphic.Listeners;
 import Data.Music;
 import javazoom.jl.decoder.JavaLayerException;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
