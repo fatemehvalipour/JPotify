@@ -49,8 +49,12 @@ public class Music extends Library implements Serializable {
     public String getTitle() {
         if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
-            super.name = tag.getTitle();
-            return tag.getTitle();
+            if (tag.getTitle() != null) {
+                super.name = tag.getTitle();
+            } else {
+                super.name = "No Title";
+            }
+            return super.name;
         }
         return null;
     }
@@ -58,7 +62,11 @@ public class Music extends Library implements Serializable {
     public String getArtist() {
         if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
-            return tag.getArtist();
+            if (tag.getArtist() != null) {
+                return tag.getArtist();
+            } else {
+                return "No Artist";
+            }
         }
         return null;
     }
@@ -66,7 +74,11 @@ public class Music extends Library implements Serializable {
     public String getAlbum() {
         if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
-            return tag.getAlbum();
+            if (tag.getAlbum() != null) {
+                return tag.getAlbum();
+            } else {
+                return "No Album";
+            }
         }
         return null;
     }
@@ -75,8 +87,12 @@ public class Music extends Library implements Serializable {
     public Image getAlbumArt() throws IOException {
         if (mp3File.hasId3v2Tag()){
             ID3v2 tag = mp3File.getId3v2Tag();
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(tag.getAlbumImage());
-            image = ImageIO.read(byteArrayInputStream);
+            if (tag.getAlbumImage() != null) {
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(tag.getAlbumImage());
+                image = ImageIO.read(byteArrayInputStream);
+            } else {
+                image = ImageIO.read(getClass().getResource("default_song.jpg"));
+            }
             return image;
         }
         return null;
@@ -148,9 +164,6 @@ public class Music extends Library implements Serializable {
         }
     }
 
-
-
-
     public long getDuration(){
         return mp3File.getLengthInSeconds();
     }
@@ -189,9 +202,5 @@ public class Music extends Library implements Serializable {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public static void setMusics(ArrayList<Library> musics) {
-        Music.musics = musics;
     }
 }
