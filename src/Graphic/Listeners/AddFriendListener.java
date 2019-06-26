@@ -16,6 +16,7 @@ public class AddFriendListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         JFrame miniFrame = new JFrame("write IP");
+        miniFrame.setBackground(Color.black);
         JTextField textField = new JTextField();
         JButton okButton = new JButton("Ok");
         okButton.setPreferredSize(new Dimension(60, 50));
@@ -25,13 +26,16 @@ public class AddFriendListener implements MouseListener {
         miniFrame.setLayout(new FlowLayout());
         miniFrame.setSize(600, 200);
         miniFrame.add(textField);
+
         miniFrame.add(okButton);
         miniFrame.setVisible(true);
         textField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    System.out.println(50);
                     Friend friend = new Friend(new Socket(((JTextField)e.getSource()).getText(), 8080));
+                    System.out.println(51);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

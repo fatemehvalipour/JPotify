@@ -20,8 +20,11 @@ public class Friend {
     public Friend(Socket socket) {
         friends.add(this);
         try {
-            objectInputStream = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
+            System.out.println("avvale object ha");
             objectOutputStream = new ObjectOutputStream(new DataOutputStream(socket.getOutputStream()));
+            System.out.println("vasate");
+            objectInputStream = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
+            System.out.println("akhare");
             objectOutputStream.writeObject(User.getUserName());
             name = (String) objectInputStream.readObject();
             objectOutputStream.writeObject(setMusic());

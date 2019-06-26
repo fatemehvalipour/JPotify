@@ -23,6 +23,7 @@ public class AddPlayListListener implements MouseListener {
         textField.setFont(textField.getFont().deriveFont(22.0f));
         miniFrame.setBounds(500, 500, 200, 200);
         miniFrame.setLayout(new FlowLayout());
+        miniFrame.setBackground(Color.black);
         miniFrame.setSize(600, 200);
         miniFrame.add(textField);
         miniFrame.add(okButton);
