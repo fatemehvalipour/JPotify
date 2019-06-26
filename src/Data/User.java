@@ -1,15 +1,13 @@
 package Data;
 
 public class User {
-    private String userName;
-    private String password;
+    private static String userName;
 
-    public User(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
+    public static void setUserName(String userName) {
+        User.userName = userName;
     }
 
-    public String getUserName() {
+    public static String getUserName() {
         return userName;
     }
 }

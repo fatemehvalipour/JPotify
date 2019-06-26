@@ -12,14 +12,14 @@ public class SearchPanel extends JPanel {
     private JTextField searchBar;
     private JTextArea username;
 
-    public SearchPanel(User user) throws IOException {
+    public SearchPanel(String user) throws IOException {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
         searchBar = new JTextField("Search");
         searchBar.addActionListener(new SearchListener());
         //searchBar.getAccessibleContext();
         //searchBar.
-        username = new JTextArea(user.getUserName());
+        username = new JTextArea(user);
         JPanel searchBox = new JPanel();
         searchBox.setBackground(Color.WHITE);
         searchBox.setLayout(new FlowLayout());

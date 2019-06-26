@@ -9,7 +9,6 @@ import Graphic.Listeners.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,8 +60,8 @@ public class Graphic {
         westBorderPanel.setPreferredSize(new Dimension(120, 445));
         centerBorderPanel.setPreferredSize(new Dimension(710, 445));
         southBorderPanel.setPreferredSize(new Dimension(950, 120));
-        User user = new User("Water Bottle", "1234");
-        searchPanel = new SearchPanel(user);
+        User.setUserName("Water Bottle");
+        searchPanel = new SearchPanel(User.getUserName());
         mainBorderPanel.add(searchPanel, BorderLayout.PAGE_START);
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
@@ -137,7 +136,6 @@ public class Graphic {
             centerGridBagPanel.getGbc().gridx = 0;
             centerGridBagPanel.add(addButton, centerGridBagPanel.getGbc());
             add = true;
-            System.out.println(123);
             addButton.addMouseListener(new AddPlayListListener());
         } else if (libraries.get(0) instanceof Music && isPlayList){
             centerGridBagPanel.getGbc().gridy = 0;
@@ -192,10 +190,7 @@ public class Graphic {
                 count++;
             }
         }
-    }
-
-    public void showPlayList(ArrayList<PlayList> playLists) {
-
+        centerGridBagPanel.repaint();
     }
 
     public void showFriendActivity(ArrayList<IP> IPList) {
