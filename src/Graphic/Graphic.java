@@ -208,7 +208,14 @@ public class Graphic {
         centerGridBagPanel.repaint();
     }
 
-    public void showFriendActivity(ArrayList<Friend> friends) {
-
+    public void showFriendActivity() {
+        eastGridPanel.removeAll();
+        eastGridPanel.revalidate();
+        for (Friend friend : Friend.getFriends()){
+            JButton friendButton = new JButton("<html><p style=\"font-size:0.9em\">" + friend.getName() + "</p><p>" + friend.getMusics().get(0) + "</p></html>");
+            eastBorderPanel.add(friendButton);
+            friendButton.addMouseListener(new ShowFriendMusicsListener());
+        }
+        eastGridPanel.repaint();
     }
 }
