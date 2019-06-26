@@ -6,6 +6,7 @@ import Graphic.Components.PlayMusicJSlide;
 import Graphic.Components.VoiceJSlide;
 import Graphic.Containers.*;
 import Graphic.Listeners.*;
+import network.Friend;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -193,7 +194,7 @@ public class Graphic {
         centerGridBagPanel.repaint();
     }
 
-    public void showFriendActivity(ArrayList<IP> IPList) {
+    public void showFriendActivity(ArrayList<Friend> friends) {
 
     }
 }

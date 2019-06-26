@@ -61,4 +61,8 @@ public class Friend {
     public ArrayList<String> getMusics() {
         return musics;
     }
+
+    public static ArrayList<Friend> getFriends() {
+        return friends;
+    }
 }
