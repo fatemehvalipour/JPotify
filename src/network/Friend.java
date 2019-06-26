@@ -10,7 +10,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Friend {
-    private String IP;
     private String name;
     private static ArrayList<Friend> friends = new ArrayList<>();
     private Socket socket;
