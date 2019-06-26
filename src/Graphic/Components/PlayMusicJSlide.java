@@ -1,9 +1,11 @@
 package Graphic.Components;
 
 import Data.Music;
+import javazoom.jl.decoder.JavaLayerException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class PlayMusicJSlide extends JPanel {
     private JSlider playSlider;
@@ -49,7 +51,18 @@ public class PlayMusicJSlide extends JPanel {
                         wholeTime.setText("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
                     }
                     if (Music.playingMusic.getEstimatedTime() == Music.playingMusic.getDuration()){
-                        break;
+                        if (!Music.repeat) {
+                            Music.next();
+                        } else {
+                            Music.playingMusic.stop();
+                            try {
+                                Music.playingMusic.play();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (JavaLayerException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 }
             }
