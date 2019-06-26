@@ -12,12 +12,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InvalidDataException, UnsupportedTagException, InterruptedException {
         new Thread(() -> {
             try {
                 ServerSocket serverSocket = new ServerSocket(8080);
                 while (true){
-                    new Friend(serverSocket.accept());
+                    Friend friend = new Friend(serverSocket.accept());
                 }
             } catch (IOException e) {
                 e.printStackTrace();

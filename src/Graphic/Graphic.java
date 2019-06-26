@@ -213,7 +213,8 @@ public class Graphic {
         eastGridPanel.revalidate();
         for (Friend friend : Friend.getFriends()){
             JButton friendButton = new JButton("<html><p style=\"font-size:1.3em\">" + friend.getName() + "</p><p>" + friend.getMusics().get(0) + "</p></html>");
-            eastBorderPanel.add(friendButton);
+            eastGridPanel.add(friendButton);
+            System.out.println(12);
             friendButton.setBackground(Color.black);
             friendButton.setPreferredSize(new Dimension(120, 100));
             friendButton.addMouseListener(new ShowFriendMusicsListener());
