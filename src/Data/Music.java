@@ -20,6 +20,7 @@ public class Music extends Library implements Serializable {
     public static volatile Music playingMusic = null;
     public static boolean isPlaying = false;
     public static float volume = 0.0f;
+    private File file;
     private boolean isFavorite;
     private String address;
     private Mp3File mp3File;
@@ -45,50 +46,86 @@ public class Music extends Library implements Serializable {
         mp3File = new Mp3File(address);
         musics.add(this);
         timer = new Timer();
+        file = new File(address);
         //TODO exception handling
     }
 
     public String getTitle() {
-        if (mp3File.hasId3v1Tag()) {
-            ID3v1 tag = mp3File.getId3v1Tag();
-            if (!tag.getTitle().equals("null")) {
-                super.name = tag.getTitle();
-            } else {
-                super.name = "No Title";
-            }
-            return super.name;
+//        if (mp3File.hasId3v1Tag()) {
+//            ID3v1 tag = mp3File.getId3v1Tag();
+//            if (!tag.getTitle().equals("null")) {
+//                super.name = tag.getTitle();
+//            } else {
+//                super.name = "No Title";
+//            }
+//            return super.name;
+//        }
+//        return null;
+        byte[] namebytes = new byte[30];
+        for (int i = 3 ; i < 33 ;i++){
+            namebytes[i - 3] = getLastBytes()[i];
         }
-        return null;
+        return new String(namebytes);
+    }
+
+    public byte[] getLastBytes(){
+        byte[] lastBytes = null;
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            byte[] bytesArray = new byte[(int) file.length()];
+            fileInputStream.read(bytesArray);
+            lastBytes = new byte[128];
+            int j = 0;
+            for (int i = bytesArray.length - 128 ; j < 128 ;i++){
+                lastBytes[j] = bytesArray[i];
+                j++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lastBytes;
     }
 
     public String getArtist() {
-        if (mp3File.hasId3v1Tag()) {
-            ID3v1 tag = mp3File.getId3v1Tag();
-            if (!tag.getArtist().equals("null")) {
-                return tag.getArtist();
-            } else {
-                return "No Artist";
-            }
+//        if (mp3File.hasId3v1Tag()) {
+//            ID3v1 tag = mp3File.getId3v1Tag();
+//            if (!tag.getArtist().equals("null")) {
+//                return tag.getArtist();
+//            } else {
+//                return "No Artist";
+//            }
+//        }
+//        return null;
+        byte[] artistbytes = new byte[30];
+        for (int i = 33; i < 63; i++){
+            artistbytes[i - 33] = getLastBytes()[i];
         }
-        return null;
+        return new String(artistbytes);
     }
 
     public String getAlbum() {
-        if (mp3File.hasId3v1Tag()) {
-            ID3v1 tag = mp3File.getId3v1Tag();
-            String str = tag.getAlbum();
-            if (str != null) {
-                return str;
-            } else {
-                return "No Album";
-            }
+//        if (mp3File.hasId3v1Tag()) {
+//            ID3v1 tag = mp3File.getId3v1Tag();
+//            String str = tag.getAlbum();
+//            if (str != null) {
+//                return str;
+//            } else {
+//                return "No Album";
+//            }
+//        }
+//        return null;
+        byte[] albumbytes = new byte[30];
+        for (int i = 63 ;i < 93; i++){
+            albumbytes[i - 63] = getLastBytes()[i];
         }
-        return null;
+        return new String(albumbytes);
     }
 
     @Override
     public Image getAlbumArt() throws IOException {
-        if (mp3File.hasId3v2Tag()){
+        if (mp3File.hasId3v2Tag()) {
             ID3v2 tag = mp3File.getId3v2Tag();
             if (tag.getAlbumImage() != null) {
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(tag.getAlbumImage());
@@ -118,17 +155,17 @@ public class Music extends Library implements Serializable {
         new Thread(() -> {
             try {
                 musics.remove(playingMusic);
-                musics.add(0,playingMusic);
-                for (Library album :  Album.getAlbums()){
-                    if(((Album)album).getAlbumName().equals(playingMusic.getAlbum())){
+                musics.add(0, playingMusic);
+                for (Library album : Album.getAlbums()) {
+                    if (((Album) album).getAlbumName().equals(playingMusic.getAlbum())) {
                         Album.getAlbums().remove(album);
                         Album.getAlbums().add(0, album);
                         break;
                     }
                 }
-                if (((PlayList)PlayList.getPlayLists().get(1)).getPlayListMusics().contains(playingMusic)){
-                    ((PlayList)PlayList.getPlayLists().get(1)).getPlayListMusics().remove(playingMusic);
-                    ((PlayList)PlayList.getPlayLists().get(1)).getPlayListMusics().add(0, playingMusic);
+                if (((PlayList) PlayList.getPlayLists().get(1)).getPlayListMusics().contains(playingMusic)) {
+                    ((PlayList) PlayList.getPlayLists().get(1)).getPlayListMusics().remove(playingMusic);
+                    ((PlayList) PlayList.getPlayLists().get(1)).getPlayListMusics().add(0, playingMusic);
                 }
                 player.play();
             } catch (JavaLayerException e) {
@@ -138,11 +175,11 @@ public class Music extends Library implements Serializable {
         player.setVol(volume);
     }
 
-    public void stop(){
+    public void stop() {
         timer.cancel();
         estimatedTime = 0;
         paused = false;
-        if(null != player) {
+        if (null != player) {
             player.close();
             totalSongLength = 0;
             pauseLocation = 0;
@@ -178,7 +215,7 @@ public class Music extends Library implements Serializable {
         }
     }
 
-    public static void previous(){
+    public static void previous() {
         int index = 0;
         if (Music.playingMusic != null) {
             for (int i = 0; i < Music.getMusics().size(); i++) {
@@ -210,7 +247,7 @@ public class Music extends Library implements Serializable {
         }
     }
 
-    public static void next(){
+    public static void next() {
         int index = 0;
         if (Music.playingMusic != null) {
             for (int i = 0; i < Music.getMusics().size(); i++) {
@@ -243,7 +280,7 @@ public class Music extends Library implements Serializable {
         }
     }
 
-    public long getDuration(){
+    public long getDuration() {
         return mp3File.getLengthInSeconds();
     }
 
@@ -263,7 +300,7 @@ public class Music extends Library implements Serializable {
         isFavorite = favorite;
     }
 
-    public int getEstimatedTime(){
+    public int getEstimatedTime() {
         return estimatedTime;
     }
 
