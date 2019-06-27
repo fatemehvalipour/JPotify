@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class PlayList extends Library implements Serializable {
     private ArrayList<Library> playListMusics;
     private static ArrayList<Library> playLists = new ArrayList<>();
+    public static PlayList selectedPlayList = null;
     private boolean removable;
     private boolean nameChange;
 

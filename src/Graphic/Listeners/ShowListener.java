@@ -40,6 +40,7 @@ public class ShowListener implements MouseListener {
                 for (Library playList : PlayList.getPlayLists()){
                     if (((PlayList) playList).getPlayListName().equals(((JButton) e.getSource()).getText())) {
                         graphic.showLibrary(((PlayList) playList).getPlayListMusics(), true);
+                        PlayList.selectedPlayList = (PlayList)playList;
                         return;
                     }
                 }
