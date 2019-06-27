@@ -18,7 +18,6 @@ public class SeekBarChangeListener implements MouseListener {
             long frame = Music.playingMusic.getTotalSongLength() / Music.playingMusic.getDuration();
             int progressBarVal = (int)Math.round(((double)e.getX() / (double)((JProgressBar)e.getSource()).getWidth()) * ((JProgressBar)e.getSource()).getMaximum());
             Music.playingMusic.setEstimatedTime((int)(((double) progressBarVal / 100) * (double)Music.playingMusic.getDuration()));
-            System.out.println((long)(frame * (((double)progressBarVal / 100) * Music.playingMusic.getDuration())));
             Music.playingMusic.setPauseLocation(Music.playingMusic.getTotalSongLength() - (long)(frame * (((double)progressBarVal / 100) * Music.playingMusic.getDuration())));
             ((JProgressBar)e.getSource()).setValue(progressBarVal);
             try {

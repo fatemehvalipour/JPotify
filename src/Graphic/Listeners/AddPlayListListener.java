@@ -1,9 +1,6 @@
 package Graphic.Listeners;
 
-import Data.Album;
-import Data.Library;
-import Data.Music;
-import Data.PlayList;
+import Data.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class AddPlayListListener implements MouseListener {
     @Override
@@ -42,10 +40,16 @@ public class AddPlayListListener implements MouseListener {
                 }
 
                 PlayList playList = new PlayList(((JTextField)e.getSource()).getText(), true, true);
+                Backup.save();
                 okButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         miniFrame.setVisible(false);
+                        try {
+                            Library.getGraphic().showLibrary(PlayList.getPlayLists(), true);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 });
             }

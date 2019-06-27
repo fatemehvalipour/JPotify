@@ -19,11 +19,12 @@ public class PlayMusicJSlide extends JPanel {
     public PlayMusicJSlide() {
         super();
         setBackground(Color.black);
+        setLayout(new BorderLayout());
         playSlider = new JProgressBar(0, 100);
         playSlider.addMouseListener(new SeekBarChangeListener());
         playSlider.setBackground(Color.black);
         playSlider.setValue(0);
-        add(playSlider);
+        add(playSlider, BorderLayout.CENTER);
         if (Music.playingMusic != null) {
             wholeTime = new JLabel("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
         } else {

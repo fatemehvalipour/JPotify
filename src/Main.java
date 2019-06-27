@@ -26,7 +26,6 @@ public class Main {
         PlayList favouritePlaylist = new PlayList("Favourite Songs", false, false);
         PlayList sharedPlaylist = new PlayList("Shared Songs", false, false);
         Backup.load();
-        sharedPlaylist.addMusic((Music) Music.getMusics().get(0));
         Graphic graphic = new Graphic();
         Library.setGraphic(graphic);
     }

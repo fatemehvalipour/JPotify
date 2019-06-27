@@ -1,14 +1,10 @@
 package Data;
 
-import Graphic.Listeners.PlayMusicListener;
 import com.mpatric.mp3agic.*;
 import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.JavaSoundAudioDevice;
 import javazoom.jl.player.Player;
-import javazoom.jl.player.advanced.AdvancedPlayer;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -35,7 +31,7 @@ public class Music extends Library implements Serializable {
     private long totalSongLength;
     private int estimatedTime;
     private Timer timer;
-    private static ArrayList<Library> musics = new ArrayList<>();
+    private static volatile ArrayList<Library> musics = new ArrayList<>();
 
     public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException {
         this.address = address;
@@ -52,21 +48,21 @@ public class Music extends Library implements Serializable {
     }
 
     public String getTitle() {
-//        if (mp3File.hasId3v1Tag()) {
-//            ID3v1 tag = mp3File.getId3v1Tag();
-//            if (!tag.getTitle().equals("null")) {
-//                super.name = tag.getTitle();
-//            } else {
-//                super.name = "No Title";
-//            }
-//            return super.name;
-//        }
-//        return null;
-        byte[] namebytes = new byte[30];
-        for (int i = 3 ; i < 33 ;i++){
-            namebytes[i - 3] = getLastBytes()[i];
+        if (mp3File.hasId3v1Tag()) {
+            ID3v1 tag = mp3File.getId3v1Tag();
+            if (!tag.getTitle().equals("null")) {
+                super.name = tag.getTitle();
+            } else {
+                super.name = "No Title";
+            }
+            return super.name;
         }
-        return new String(namebytes);
+        return null;
+//        byte[] namebytes = new byte[30];
+//        for (int i = 3 ; i < 33 ;i++){
+//            namebytes[i - 3] = getLastBytes()[i];
+//        }
+//        return new String(namebytes);
     }
 
     public byte[] getLastBytes(){
@@ -90,38 +86,38 @@ public class Music extends Library implements Serializable {
     }
 
     public String getArtist() {
-//        if (mp3File.hasId3v1Tag()) {
-//            ID3v1 tag = mp3File.getId3v1Tag();
-//            if (!tag.getArtist().equals("null")) {
-//                return tag.getArtist();
-//            } else {
-//                return "No Artist";
-//            }
-//        }
-//        return null;
-        byte[] artistbytes = new byte[30];
-        for (int i = 33; i < 63; i++){
-            artistbytes[i - 33] = getLastBytes()[i];
+        if (mp3File.hasId3v1Tag()) {
+            ID3v1 tag = mp3File.getId3v1Tag();
+            if (!tag.getArtist().equals("null")) {
+                return tag.getArtist();
+            } else {
+                return "No Artist";
+            }
         }
-        return new String(artistbytes);
+        return null;
+//        byte[] artistbytes = new byte[30];
+//        for (int i = 33; i < 63; i++){
+//            artistbytes[i - 33] = getLastBytes()[i];
+//        }
+//        return new String(artistbytes);
     }
 
     public String getAlbum() {
-//        if (mp3File.hasId3v1Tag()) {
-//            ID3v1 tag = mp3File.getId3v1Tag();
-//            String str = tag.getAlbum();
-//            if (str != null) {
-//                return str;
-//            } else {
-//                return "No Album";
-//            }
-//        }
-//        return null;
-        byte[] albumbytes = new byte[30];
-        for (int i = 63 ;i < 93; i++){
-            albumbytes[i - 63] = getLastBytes()[i];
+        if (mp3File.hasId3v1Tag()) {
+            ID3v1 tag = mp3File.getId3v1Tag();
+            String str = tag.getAlbum();
+            if (str != null) {
+                return str;
+            } else {
+                return "No Album";
+            }
         }
-        return new String(albumbytes);
+        return null;
+//        byte[] albumbytes = new byte[30];
+//        for (int i = 63 ;i < 93; i++){
+//            albumbytes[i - 63] = getLastBytes()[i];
+//        }
+//        return new String(albumbytes);
     }
 
     @Override
@@ -323,14 +319,6 @@ public class Music extends Library implements Serializable {
 
     public long getTotalSongLength() {
         return totalSongLength;
-    }
-
-    public FileInputStream getMusicFile() {
-        return musicFile;
-    }
-
-    public long getPauseLocation() {
-        return pauseLocation;
     }
 
     public void setPauseLocation(long pauseLocation) {

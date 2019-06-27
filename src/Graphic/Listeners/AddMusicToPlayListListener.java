@@ -1,5 +1,6 @@
 package Graphic.Listeners;
 
+import Data.Backup;
 import Data.Library;
 import Data.Music;
 import Data.PlayList;
@@ -34,7 +35,9 @@ public class AddMusicToPlayListListener implements MouseListener {
                 public void mouseClicked(MouseEvent e) {
                     try {
                         PlayList.selectedPlayList.addMusic((Music)music);
+                        Backup.save();
                         musicsFrame.setVisible(false);
+                        Library.getGraphic().showLibrary(PlayList.selectedPlayList.getPlayListMusics(), true);
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
