@@ -4,6 +4,8 @@ import Data.Library;
 import Data.Music;
 import Data.PlayList;
 import Data.User;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 
 import javax.swing.*;
 import java.io.*;
@@ -74,6 +76,33 @@ public class Friend {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void download(String musicName){
+        byte[] downloadingMusic = null;
+        try {
+            objectOutputStream.writeObject(musicName);
+            System.out.println("receiving... ");
+            downloadingMusic = (byte[]) objectInputStream.readObject();
+            System.out.println("received");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            File savedFile = new File(".\\Downloads\\" + musicName + ".mp3");
+            FileOutputStream savedMusic = new FileOutputStream(savedFile);
+            savedMusic.write(downloadingMusic);
+            new Music(savedFile.getAbsolutePath());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+        } catch (UnsupportedTagException e) {
             e.printStackTrace();
         }
     }
