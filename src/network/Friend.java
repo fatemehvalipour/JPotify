@@ -11,14 +11,16 @@ import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Friend {
     private String name;
+    public static Friend selectedFriend = null;
     private static ArrayList<Friend> friends = new ArrayList<>();
-    private Socket socket;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
     private ArrayList<String> musics;
+    private Thread listeningThread;
 
     public Friend(Socket socket) {
         friends.add(this);
@@ -35,7 +37,7 @@ public class Friend {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        new Thread(){
+        listeningThread = new Thread(){
             @Override
             public void run() {
                 while (true){
@@ -54,7 +56,8 @@ public class Friend {
                     }
                 }
             }
-        }.start();
+        };
+        listeningThread.start();
     }
 
     public void upload(String musicName) {
@@ -71,6 +74,7 @@ public class Friend {
             FileInputStream fis = new FileInputStream(musicFile);
             fis.read(sendingMusic);
             System.out.println("Sending file...");
+            objectOutputStream.writeInt(sendingMusic.length);
             objectOutputStream.writeObject(sendingMusic);
             System.out.println("sent");
         } catch (FileNotFoundException e) {
@@ -80,15 +84,19 @@ public class Friend {
         }
     }
     public void download(String musicName){
+        listeningThread.stop();
         byte[] downloadingMusic = null;
         try {
             objectOutputStream.writeObject(musicName);
             System.out.println("receiving... ");
-            downloadingMusic = (byte[]) objectInputStream.readObject();
+//            System.out.println("Press any key when downloaded...");
+//            Scanner scanner = new Scanner(System.in);
+//            scanner.next();
+            int size = objectInputStream.readInt();
+            downloadingMusic = new byte[size];
+            objectInputStream.readFully(downloadingMusic);
             System.out.println("received");
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         try {
@@ -105,6 +113,7 @@ public class Friend {
         } catch (UnsupportedTagException e) {
             e.printStackTrace();
         }
+        listeningThread.resume();
     }
 
     public ArrayList<String> setMusic(){
