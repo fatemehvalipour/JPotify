@@ -1,5 +1,6 @@
 package Graphic.Listeners;
 
+import Data.Backup;
 import Data.Music;
 import Data.PlayList;
 
@@ -17,6 +18,7 @@ public class LikeButtonListener implements MouseListener {
         if (!Music.playingMusic.isFavorite()) {
             try {
                 ((PlayList)PlayList.getPlayLists().get(0)).addMusic(Music.playingMusic);
+                Backup.save();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -30,6 +32,7 @@ public class LikeButtonListener implements MouseListener {
             }
         } else {
             ((PlayList)PlayList.getPlayLists().get(0)).removeMusic(Music.playingMusic);
+            Backup.save();
             Music.playingMusic.setFavorite(false);
             JButton Like = (JButton) e.getSource();
             try {

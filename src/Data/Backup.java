@@ -57,6 +57,9 @@ public class Backup {
                     String musicName = scanner.nextLine();
                     for (Library music : Music.getMusics()){
                         if ((musicName).equals(((Music)music).getTitle())){
+                            if (((PlayList)playlist).getPlayListName().equals("Favourite Songs")){
+                                ((Music)music).setFavorite(true);
+                            }
                             ((PlayList)playlist).addMusic((Music) music);
                         }
                     }

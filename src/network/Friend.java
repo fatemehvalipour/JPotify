@@ -5,6 +5,7 @@ import Data.Music;
 import Data.PlayList;
 import Data.User;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -20,21 +21,42 @@ public class Friend {
     public Friend(Socket socket) {
         friends.add(this);
         try {
-            System.out.println("avvale object ha");
             objectOutputStream = new ObjectOutputStream(new DataOutputStream(socket.getOutputStream()));
-            System.out.println("vasate");
             objectInputStream = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
-            System.out.println("akhare");
             objectOutputStream.writeObject(User.getUserName());
             name = (String) objectInputStream.readObject();
             objectOutputStream.writeObject(setMusic());
             musics = (ArrayList<String>) objectInputStream.readObject();
-            objectOutputStream.writeObject(setMusic());
+            Library.getGraphic().showFriendActivity();
         } catch (IOException e) {
             System.out.println("Can't create these streams");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        new Thread(){
+            @Override
+            public void run() {
+                while (true){
+                    try {
+                        Object object = objectInputStream.readObject();
+                        if (object instanceof String){
+                            upload((String) object);
+                        } else {
+                            musics = (ArrayList<String>)object;
+                            Library.getGraphic().showFriendActivity();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+    }
+
+    public void upload(String musicName){
+
     }
 
     public ArrayList<String> setMusic(){
@@ -49,10 +71,7 @@ public class Friend {
         try {
             objectOutputStream.flush();
             objectOutputStream.writeObject(setMusic());
-            musics = (ArrayList<String>) objectInputStream.readObject();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
