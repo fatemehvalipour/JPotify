@@ -28,45 +28,42 @@ public class PlayMusicJSlide extends JPanel {
             wholeTime = new JLabel("0:0");
         }
         timePlayed = new JLabel("0:0");
-        new Thread(){
-            @Override
-            public void run() {
-                Music nowMusic = Music.playingMusic;
-                while (true) {
-                    if (Music.playingMusic == null){
-                        continue;
-                    }
-                    playSlider.setValue((int)((((double) Music.playingMusic.getEstimatedTime()) / ((double) Music.playingMusic.getDuration())) * 100));
-                    if ((Music.playingMusic.getEstimatedTime() / 60) > 9 && (Music.playingMusic.getEstimatedTime() % 60) > 9) {
-                        timePlayed.setText("" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
-                    } else if ((Music.playingMusic.getEstimatedTime() / 60) < 10 && (Music.playingMusic.getEstimatedTime() % 60) < 10){
-                        timePlayed.setText("0" + (Music.playingMusic.getEstimatedTime() / 60) + ":0" + (Music.playingMusic.getEstimatedTime() % 60));
-                    } else if ((Music.playingMusic.getEstimatedTime() / 60) > 9 && (Music.playingMusic.getEstimatedTime() % 60) < 10){
-                        timePlayed.setText("" + (Music.playingMusic.getEstimatedTime() / 60) + ":0" + (Music.playingMusic.getEstimatedTime() % 60));
+        new Thread(() -> {
+            Music nowMusic = Music.playingMusic;
+            while (true) {
+                if (Music.playingMusic == null){
+                    continue;
+                }
+                playSlider.setValue((int)((((double) Music.playingMusic.getEstimatedTime()) / ((double) Music.playingMusic.getDuration())) * 100));
+                if ((Music.playingMusic.getEstimatedTime() / 60) > 9 && (Music.playingMusic.getEstimatedTime() % 60) > 9) {
+                    timePlayed.setText("" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
+                } else if ((Music.playingMusic.getEstimatedTime() / 60) < 10 && (Music.playingMusic.getEstimatedTime() % 60) < 10){
+                    timePlayed.setText("0" + (Music.playingMusic.getEstimatedTime() / 60) + ":0" + (Music.playingMusic.getEstimatedTime() % 60));
+                } else if ((Music.playingMusic.getEstimatedTime() / 60) > 9 && (Music.playingMusic.getEstimatedTime() % 60) < 10){
+                    timePlayed.setText("" + (Music.playingMusic.getEstimatedTime() / 60) + ":0" + (Music.playingMusic.getEstimatedTime() % 60));
+                } else {
+                    timePlayed.setText("0" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
+                }
+                if (!Music.playingMusic.equals(nowMusic)){//TODO bad as stop chi mishe??
+                    nowMusic = Music.playingMusic;
+                    wholeTime.setText("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
+                }
+                if (Music.playingMusic.getEstimatedTime() == Music.playingMusic.getDuration()){
+                    if (!Music.repeat) {
+                        Music.next();
                     } else {
-                        timePlayed.setText("0" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
-                    }
-                    if (!Music.playingMusic.equals(nowMusic)){//TODO bad as stop chi mishe??
-                        nowMusic = Music.playingMusic;
-                        wholeTime.setText("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
-                    }
-                    if (Music.playingMusic.getEstimatedTime() == Music.playingMusic.getDuration()){
-                        if (!Music.repeat) {
-                            Music.next();
-                        } else {
-                            Music.playingMusic.stop();
-                            try {
-                                Music.playingMusic.play();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (JavaLayerException e) {
-                                e.printStackTrace();
-                            }
+                        Music.playingMusic.stop();
+                        try {
+                            Music.playingMusic.play();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JavaLayerException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
             }
-        }.start();
+        }).start();
         horizontalBox = Box.createHorizontalBox();
         horizontalBox.add(Box.createGlue());
         horizontalBox.add(timePlayed);

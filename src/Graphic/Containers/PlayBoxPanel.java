@@ -6,6 +6,7 @@ import Graphic.Listeners.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class PlayBoxPanel extends JPanel{
     private JButton playButton;
@@ -51,6 +52,26 @@ public class PlayBoxPanel extends JPanel{
             } else {
                 likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("..\\Listeners\\heart.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
             }
+            new Thread(){
+                @Override
+                public void run() {
+                    Music nowMusic = Music.playingMusic;
+                    while (true){
+                        if (Music.playingMusic != null && !Music.playingMusic.equals(nowMusic)){
+                            try {
+                                if (Music.playingMusic == null || !Music.playingMusic.isFavorite()) {
+                                    likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("heartBlue.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+                                } else {
+                                    likeButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("..\\Listeners\\heart.png")).getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            nowMusic = Music.playingMusic;
+                        }
+                    }
+                }
+            }.start();
             likeButton.setPreferredSize(new Dimension(55, 55));
             likeButton.setBackground(Color.black);
             likeButton.setBorder(null);
