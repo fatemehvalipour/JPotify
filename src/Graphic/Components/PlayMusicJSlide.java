@@ -1,6 +1,7 @@
 package Graphic.Components;
 
 import Data.Music;
+import Graphic.Listeners.SeekBarChangeListener;
 import javazoom.jl.decoder.JavaLayerException;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class PlayMusicJSlide extends JPanel {
-    private JSlider playSlider;
+    private JProgressBar playSlider;
     private long frameCount;
     private Box horizontalBox;
     private JLabel timePlayed;
@@ -18,7 +19,8 @@ public class PlayMusicJSlide extends JPanel {
     public PlayMusicJSlide() {
         super();
         setBackground(Color.black);
-        playSlider = new JSlider(0, 100);
+        playSlider = new JProgressBar(0, 100);
+        playSlider.addMouseListener(new SeekBarChangeListener());
         playSlider.setBackground(Color.black);
         playSlider.setValue(0);
         add(playSlider);

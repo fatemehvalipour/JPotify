@@ -5,6 +5,7 @@ import com.mpatric.mp3agic.*;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.JavaSoundAudioDevice;
 import javazoom.jl.player.Player;
+import javazoom.jl.player.advanced.AdvancedPlayer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class Music extends Library implements Serializable {
 
     public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException {
         this.address = address;
-        musicFile = null;
+        musicFile = new FileInputStream(address);
         repeat = false;
         paused = false;
         totalSongLength = 0;
@@ -318,5 +319,25 @@ public class Music extends Library implements Serializable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public long getTotalSongLength() {
+        return totalSongLength;
+    }
+
+    public FileInputStream getMusicFile() {
+        return musicFile;
+    }
+
+    public long getPauseLocation() {
+        return pauseLocation;
+    }
+
+    public void setPauseLocation(long pauseLocation) {
+        this.pauseLocation = pauseLocation;
+    }
+
+    public void setEstimatedTime(int estimatedTime) {
+        this.estimatedTime = estimatedTime;
     }
 }
