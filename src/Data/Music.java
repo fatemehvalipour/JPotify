@@ -19,6 +19,7 @@ public class Music extends Library implements Serializable {
     //TODO make the public key word to private
     public static volatile Music playingMusic = null;
     public static boolean isPlaying = false;
+    public static float volume = 0.0f;
     private boolean isFavorite;
     private String address;
     private Mp3File mp3File;
@@ -120,6 +121,7 @@ public class Music extends Library implements Serializable {
                 System.out.println("can't play this music");
             }
         }).start();
+        player.setVol(volume);
     }
 
     public void stop(){

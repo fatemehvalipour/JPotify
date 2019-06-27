@@ -14,6 +14,7 @@ public class volumeChangeListener implements ChangeListener {
         if (Music.playingMusic != null) {
             Player player = Music.playingMusic.getPlayer();
             player.setVol((((float) ((JSlider) e.getSource()).getValue()) / 100) * 6f);
+            Music.volume = (((float) ((JSlider) e.getSource()).getValue()) / 100) * 6f;
         }
     }
 }
