@@ -46,7 +46,7 @@ public class Friend {
                             Library.getGraphic().showFriendActivity();
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println("Can't receive any file at this moment");
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -55,8 +55,27 @@ public class Friend {
         }.start();
     }
 
-    public void upload(String musicName){
-
+    public void upload(String musicName) {
+        File musicFile = null;
+        byte[] sendingMusic = null;
+        for (Library music : Music.getMusics()){
+            if (musicName.equals(((Music)music).getTitle())){
+                musicFile = new File(((Music)music).getAddress());
+                break;
+            }
+        }
+        sendingMusic = new byte[(int)musicFile.length()];
+        try {
+            FileInputStream fis = new FileInputStream(musicFile);
+            fis.read(sendingMusic);
+            System.out.println("Sending file...");
+            objectOutputStream.writeObject(sendingMusic);
+            System.out.println("sent");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<String> setMusic(){
