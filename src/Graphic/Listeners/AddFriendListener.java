@@ -34,7 +34,7 @@ public class AddFriendListener implements MouseListener {
             public void actionPerformed(ActionEvent e) {
                 try {
                     System.out.println(50);
-                    Friend friend = new Friend(new Socket(((JTextField)e.getSource()).getText(), 8080));
+                    new Friend(new Socket(((JTextField)e.getSource()).getText(), 8080));
                     System.out.println(51);
                 } catch (IOException ex) {
                     ex.printStackTrace();

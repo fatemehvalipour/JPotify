@@ -29,14 +29,16 @@ public class Graphic {
     private GridPanel westGridPanel;
     private PlayBoxPanel playBoxPanel;
     private BoxPanel southCenterBoxPanel;
-    private VoiceJSlide voiceSlider;
+//    private VoiceJSlide voiceSlider;
     private ListButton musicButton;
     private ListButton albumButton;
     private ListButton playListButton;
     private PlayMusicJSlide playMusicJSlider;
+    private FlowVoicePanel flowVoicePanel;
     private JLabel albumArt;
     private JLabel nameOfMusic;
     private JLabel libraries;
+    public static boolean SystemVoiceMute = false;
 
 
     public Graphic() throws IOException {
@@ -66,7 +68,7 @@ public class Graphic {
         mainBorderPanel.add(searchPanel, BorderLayout.PAGE_START);
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
-        voiceSlider = new VoiceJSlide(southBorderPanel, -1000, 0);
+        flowVoicePanel = new FlowVoicePanel(southBorderPanel, new VoiceJSlide( -1000, 0));
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
         libraries = new JLabel("Libraries");

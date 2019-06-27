@@ -17,7 +17,7 @@ public class Main {
             try {
                 ServerSocket serverSocket = new ServerSocket(8080);
                 while (true){
-                    Friend friend = new Friend(serverSocket.accept());
+                    new Friend(serverSocket.accept());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
