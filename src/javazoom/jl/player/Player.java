@@ -247,14 +247,12 @@ public class Player
 		return true;
 	}
 
-	public void setVol(float val){
-		if (this.audio instanceof JavaSoundAudioDevice)
-		{
-			JavaSoundAudioDevice jsAudio = (JavaSoundAudioDevice) audio;
-			jsAudio.setLineGain(val);
-		}
+    public void setVol(float val){
+        if (this.audio instanceof JavaSoundAudioDevice)
+        {
+            JavaSoundAudioDevice jsAudio = (JavaSoundAudioDevice) audio;
+            jsAudio.setLineGain(val);
+        }
 
-	}
-
-	
+    }
 }
