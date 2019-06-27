@@ -126,6 +126,10 @@ public class Music extends Library implements Serializable {
                         break;
                     }
                 }
+                if (((PlayList)PlayList.getPlayLists().get(1)).getPlayListMusics().contains(playingMusic)){
+                    ((PlayList)PlayList.getPlayLists().get(1)).getPlayListMusics().remove(playingMusic);
+                    ((PlayList)PlayList.getPlayLists().get(1)).getPlayListMusics().add(0, playingMusic);
+                }
                 player.play();
             } catch (JavaLayerException e) {
                 System.out.println("can't play this music");
