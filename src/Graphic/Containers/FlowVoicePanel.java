@@ -1,6 +1,7 @@
 package Graphic.Containers;
 
 import Graphic.Components.VoiceJSlide;
+import Graphic.Listeners.MuteListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,6 +23,8 @@ public class FlowVoicePanel extends JPanel {
         }
         voiceButton.setBackground(Color.black);
         voiceButton.setBorder(null);
+        voiceButton.setFocusable(false);
+        voiceButton.addMouseListener(new MuteListener());
         add(voiceButton);
         add(voiceJSlide);
         borderPanel.add(this, BorderLayout.EAST);
