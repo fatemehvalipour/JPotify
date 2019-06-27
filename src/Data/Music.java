@@ -51,7 +51,7 @@ public class Music extends Library implements Serializable {
     public String getTitle() {
         if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
-            if (tag.getTitle() != null) {
+            if (!tag.getTitle().equals("null")) {
                 super.name = tag.getTitle();
             } else {
                 super.name = "No Title";
@@ -64,7 +64,7 @@ public class Music extends Library implements Serializable {
     public String getArtist() {
         if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
-            if (tag.getArtist() != null) {
+            if (!tag.getArtist().equals("null")) {
                 return tag.getArtist();
             } else {
                 return "No Artist";
@@ -76,8 +76,9 @@ public class Music extends Library implements Serializable {
     public String getAlbum() {
         if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
-            if (tag.getAlbum() != null) {
-                return tag.getAlbum();
+            String str = tag.getAlbum();
+            if (str != null) {
+                return str;
             } else {
                 return "No Album";
             }
@@ -116,6 +117,15 @@ public class Music extends Library implements Serializable {
         timer.scheduleAtFixedRate(new estimatedTime(), 0, 1000);//TODO chera inja pak nakonim aks o ina ro??
         new Thread(() -> {
             try {
+                musics.remove(playingMusic);
+                musics.add(0,playingMusic);
+                for (Library album :  Album.getAlbums()){
+                    if(((Album)album).getAlbumName().equals(playingMusic.getAlbum())){
+                        Album.getAlbums().remove(album);
+                        Album.getAlbums().add(0, album);
+                        break;
+                    }
+                }
                 player.play();
             } catch (JavaLayerException e) {
                 System.out.println("can't play this music");
@@ -128,7 +138,7 @@ public class Music extends Library implements Serializable {
         timer.cancel();
         estimatedTime = 0;
         paused = false;
-        if( null != player) {
+        if(null != player) {
             player.close();
             totalSongLength = 0;
             pauseLocation = 0;

@@ -39,6 +39,9 @@ public class Album extends Library implements Serializable {
                 return;
             }
         }
+        if (music.getAlbum() == null){
+            System.out.println("isNull");
+        }
         Album album = new Album(music.getAlbum());
         album.addMusic(music);
         album.setImage(music.getAlbumArt());
