@@ -86,7 +86,7 @@ public class Friend {
     }
     public void download(String musicName){
         listeningThread.stop();
-        byte[] downloadingMusic = new byte[20000000];
+        byte[] downloadingMusic = null;
         try {
             objectOutputStream.writeObject(musicName);
             System.out.println("receiving... ");
@@ -95,15 +95,18 @@ public class Friend {
 //            scanner.next();
             int size = objectInputStream.readInt();
             downloadingMusic = new byte[size];
-            objectInputStream.readFully(downloadingMusic);
+            System.out.println(size);
+            objectInputStream.read(downloadingMusic, 0, size);
+            System.out.println(downloadingMusic.length);
             System.out.println("received");
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            File savedFile = new File(".\\Downloads\\" + musicName + ".mp3");
-            FileOutputStream savedMusic = new FileOutputStream(savedFile);
+            FileOutputStream savedMusic = new FileOutputStream(".\\Downloads\\" + musicName + ".mp3");
             savedMusic.write(downloadingMusic);
+            savedMusic.close();
+            File savedFile = new File(".\\Downloads\\" + musicName + ".mp3");
             new Music(savedFile.getAbsolutePath());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
