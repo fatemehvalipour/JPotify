@@ -1,5 +1,6 @@
 package Graphic.Listeners;
 
+import Data.Backup;
 import Data.Library;
 import Data.Music;
 import Data.PlayList;
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class PlaylistJPopUpMenu extends JPopupMenu {
 
@@ -20,6 +22,12 @@ public class PlaylistJPopUpMenu extends JPopupMenu {
             public void actionPerformed(ActionEvent e) {
                 if (playList.isRemovable()) {
                     PlayList.getPlayLists().remove(playList);
+                    Backup.save();
+                    try {
+                        Library.getGraphic().showLibrary(PlayList.getPlayLists(), true);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
                 setVisible(false);
             }
@@ -54,12 +62,17 @@ public class PlaylistJPopUpMenu extends JPopupMenu {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         miniFrame.setVisible(false);
+                        Backup.save();
+                        try {
+                            Library.getGraphic().showLibrary(PlayList.getPlayLists(), true);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 });
             }
         });
         add(delete);
         add(rename);
-
     }
 }
