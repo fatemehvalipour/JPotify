@@ -1,11 +1,15 @@
 package Graphic.Containers;
 
+import Data.Lyric;
+import Data.Music;
 import Data.User;
 import Graphic.Listeners.SearchListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 public class SearchPanel extends JPanel {
@@ -39,5 +43,56 @@ public class SearchPanel extends JPanel {
         username.setForeground(Color.white);
         add(searchBox, BorderLayout.WEST);
         add(username, BorderLayout.EAST);
+        JButton lyric = new JButton("Lyric");
+        lyric.setBackground(Color.black);
+        lyric.setFocusable(false);
+        lyric.setBorder(null);
+        lyric.setForeground(Color.white);
+        add(lyric, BorderLayout.CENTER);
+        lyric.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFrame lyricFrame = new JFrame("lyric");
+                lyricFrame.setSize(500, 500);
+                lyricFrame.setVisible(true);
+                JPanel interfacePanel = new JPanel();
+                interfacePanel.setLayout(new BoxLayout(interfacePanel, BoxLayout.Y_AXIS));
+                interfacePanel.add(Box.createGlue());
+                interfacePanel.setPreferredSize(new Dimension(450, 450));
+                lyricFrame.add(new JScrollPane(interfacePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED));
+                String lyric = "<html>";
+                try {
+                    for (String line : Lyric.getSongLyrics(Music.playingMusic.getArtist(), Music.playingMusic.getTitle())){
+                        lyric = lyric.concat(line + "<br>");
+                    }
+                    lyric = lyric.concat("</html>");
+                    JLabel text = new JLabel(lyric);
+                    text.setPreferredSize(new Dimension(500, 500));
+                    interfacePanel.add(text);
+                } catch (IOException e1) {
+                    System.out.println("There is no lyric in net");
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
 }

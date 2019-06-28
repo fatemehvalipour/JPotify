@@ -58,7 +58,7 @@ public class Music extends Library implements Serializable {
             }
             return super.name;
         }
-        return null;
+        return "No Title";
 //        byte[] namebytes = new byte[30];
 //        for (int i = 3 ; i < 33 ;i++){
 //            namebytes[i - 3] = getLastBytes()[i];
@@ -95,7 +95,7 @@ public class Music extends Library implements Serializable {
                 return "No Artist";
             }
         }
-        return null;
+        return "No Artist";
 //        byte[] artistbytes = new byte[30];
 //        for (int i = 33; i < 63; i++){
 //            artistbytes[i - 33] = getLastBytes()[i];
@@ -113,7 +113,7 @@ public class Music extends Library implements Serializable {
                 return "No Album";
             }
         }
-        return null;
+        return "No Album";
 //        byte[] albumbytes = new byte[30];
 //        for (int i = 63 ;i < 93; i++){
 //            albumbytes[i - 63] = getLastBytes()[i];
@@ -171,7 +171,7 @@ public class Music extends Library implements Serializable {
             }
         }).start();
         try {
-            Thread.sleep(250);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package Graphic.Listeners;
 
 import Data.Library;
+import Data.Lyric;
 import Data.Music;
 import Graphic.Graphic;
 import javazoom.jl.decoder.JavaLayerException;
