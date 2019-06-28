@@ -47,7 +47,7 @@ public class Backup {
             while (scanner.hasNext()){
                 String playlistName = scanner.nextLine();
                 if (!playlistName.equals("Favourite Songs") && !playlistName.equals("Shared Songs")){
-                    new PlayList(playlistName, false, false);
+                    new PlayList(playlistName, true, true);
                 }
             }
             scanner.close();

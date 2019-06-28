@@ -26,7 +26,6 @@ public class AddFriendListener implements MouseListener {
         miniFrame.setLayout(new FlowLayout());
         miniFrame.setSize(600, 200);
         miniFrame.add(textField);
-
         miniFrame.add(okButton);
         miniFrame.setVisible(true);
         textField.addActionListener(new ActionListener() {

@@ -74,9 +74,10 @@ public class Friend {
             FileInputStream fis = new FileInputStream(musicFile);
             fis.read(sendingMusic);
             System.out.println("Sending file...");
-//            objectOutputStream.writeInt(sendingMusic.length);
+            objectOutputStream.writeInt(sendingMusic.length);
             objectOutputStream.writeObject(sendingMusic);
             System.out.println("sent");
+            objectOutputStream.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -92,9 +93,8 @@ public class Friend {
 //            System.out.println("Press any key when downloaded...");
 //            Scanner scanner = new Scanner(System.in);
 //            scanner.next();
-//            int size = objectInputStream.readInt();
-//            downloadingMusic = new byte[size];
-            System.out.println("still receiving...");
+            int size = objectInputStream.readInt();
+            downloadingMusic = new byte[size];
             objectInputStream.readFully(downloadingMusic);
             System.out.println("received");
         } catch (IOException e) {

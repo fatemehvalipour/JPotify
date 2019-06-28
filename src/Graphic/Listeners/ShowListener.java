@@ -39,9 +39,20 @@ public class ShowListener implements MouseListener {
                 }
                 for (Library playList : PlayList.getPlayLists()){
                     if (((PlayList) playList).getPlayListName().equals(((JButton) e.getSource()).getText())) {
-                        graphic.showLibrary(((PlayList) playList).getPlayListMusics(), true);
-                        PlayList.selectedPlayList = (PlayList)playList;
-                        return;
+                        if (e.getButton() == MouseEvent.BUTTON3){
+                            for (Library Playlist : PlayList.getPlayLists()){
+                                if (((JButton)e.getSource()).getText().equals(((PlayList)Playlist).getName())){
+                                    PlaylistJPopUpMenu playlistJPopUpMenu = new PlaylistJPopUpMenu((PlayList) Playlist);
+                                    playlistJPopUpMenu.show(e.getComponent(), e.getX(), e.getY());
+                                    break;
+                                }
+                            }
+
+                        } else {
+                            graphic.showLibrary(((PlayList) playList).getPlayListMusics(), true);
+                            PlayList.selectedPlayList = (PlayList) playList;
+                            return;
+                        }
                     }
                 }
             }

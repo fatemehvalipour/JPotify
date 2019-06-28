@@ -80,4 +80,12 @@ public class PlayList extends Library implements Serializable {
     public static void setPlayLists(ArrayList<Library> playLists) {
         PlayList.playLists = playLists;
     }
+
+    public boolean isRemovable() {
+        return removable;
+    }
+
+    public boolean isNameChange() {
+        return nameChange;
+    }
 }

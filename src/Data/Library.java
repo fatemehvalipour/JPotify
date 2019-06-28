@@ -21,4 +21,12 @@ public abstract class Library implements Serializable {
     }
 
     public abstract Image getAlbumArt() throws IOException;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
