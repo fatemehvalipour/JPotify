@@ -35,6 +35,9 @@ public class AddMusicToPlayListListener implements MouseListener {
                 public void mouseClicked(MouseEvent e) {
                     try {
                         PlayList.selectedPlayList.addMusic((Music)music);
+                        if (PlayList.selectedPlayList.getPlayListName().equals("Favourite Songs")){
+                            ((Music) music).setFavorite(true);
+                        }
                         Backup.save();
                         musicsFrame.setVisible(false);
                         Library.getGraphic().showLibrary(PlayList.selectedPlayList.getPlayListMusics(), true);
