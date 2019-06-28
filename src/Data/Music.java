@@ -17,6 +17,7 @@ public class Music extends Library implements Serializable {
     public static volatile Music playingMusic = null;
     public static boolean isPlaying = false;
     public static float volume = 0.0f;
+    public static boolean isMute = false;
     private File file;
     private boolean isFavorite;
     private String address;
@@ -169,7 +170,16 @@ public class Music extends Library implements Serializable {
                 System.out.println("can't play this music");
             }
         }).start();
-        player.setVol(volume);
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (isMute) {
+            Music.playingMusic.getPlayer().setVol(-60.0f);
+        } else {
+            player.setVol(volume);
+        }
     }
 
     public void stop() {

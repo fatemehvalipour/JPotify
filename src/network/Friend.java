@@ -74,7 +74,7 @@ public class Friend {
             FileInputStream fis = new FileInputStream(musicFile);
             fis.read(sendingMusic);
             System.out.println("Sending file...");
-            objectOutputStream.writeInt(sendingMusic.length);
+//            objectOutputStream.writeInt(sendingMusic.length);
             objectOutputStream.writeObject(sendingMusic);
             System.out.println("sent");
         } catch (FileNotFoundException e) {
@@ -85,15 +85,16 @@ public class Friend {
     }
     public void download(String musicName){
         listeningThread.stop();
-        byte[] downloadingMusic = null;
+        byte[] downloadingMusic = new byte[20000000];
         try {
             objectOutputStream.writeObject(musicName);
             System.out.println("receiving... ");
 //            System.out.println("Press any key when downloaded...");
 //            Scanner scanner = new Scanner(System.in);
 //            scanner.next();
-            int size = objectInputStream.readInt();
-            downloadingMusic = new byte[size];
+//            int size = objectInputStream.readInt();
+//            downloadingMusic = new byte[size];
+            System.out.println("still receiving...");
             objectInputStream.readFully(downloadingMusic);
             System.out.println("received");
         } catch (IOException e) {

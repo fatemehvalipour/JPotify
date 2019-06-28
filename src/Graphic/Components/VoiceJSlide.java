@@ -19,6 +19,7 @@ public class VoiceJSlide extends JSlider {
         setMajorTickSpacing(200);
         setMinorTickSpacing(5);
         setBackground(Color.black);
+        setValue(max);
         addChangeListener(new volumeChangeListener());
         setPreferredSize(new Dimension(150,120));
     }
