@@ -10,11 +10,14 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Scanner;
 
 public class Friend {
     private String name;
+    private Socket socket;
     public static Friend selectedFriend = null;
     private static ArrayList<Friend> friends = new ArrayList<>();
     private ObjectOutputStream objectOutputStream;
@@ -24,6 +27,7 @@ public class Friend {
 
     public Friend(Socket socket) {
         friends.add(this);
+        this.socket = socket;
         try {
             objectOutputStream = new ObjectOutputStream(new DataOutputStream(socket.getOutputStream()));
             objectInputStream = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
@@ -54,6 +58,11 @@ public class Friend {
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
+                    try {
+                        objectOutputStream.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         };
@@ -70,14 +79,31 @@ public class Friend {
             }
         }
         sendingMusic = new byte[(int)musicFile.length()];
+        System.out.println("bad as  new byteArray");
         try {
             FileInputStream fis = new FileInputStream(musicFile);
-            fis.read(sendingMusic);
-            System.out.println("Sending file...");
-            objectOutputStream.writeInt(sendingMusic.length);
-            objectOutputStream.writeObject(sendingMusic);
-            System.out.println("sent");
+            int counter;
+            while ((counter = fis.read(sendingMusic)) > 0) {
+                System.out.println(counter);
+                objectOutputStream.write(sendingMusic, 0, counter);
+                objectOutputStream.flush();
+            }
+            System.out.println("bad as write");
+            objectOutputStream.write(0);
             objectOutputStream.flush();
+            System.out.println("bad as flush");
+            fis.close();
+//            objectOutputStream.flush();
+//            objectOutputStream.writeUTF(BasicBase64format);
+//            System.out.println("ok");
+////            ByteBuffer buf = ByteBuffer.allocate(4);
+////            buf.putInt(sendingMusic.length);
+////            objectOutputStream.write(buf.array(), 0, 4);
+////            System.out.println(sendingMusic.length);
+////            objectOutputStream.write(sendingMusic, 0, sendingMusic.length);
+////            System.out.println("sent");
+////            System.out.println(sendingMusic.length);
+////            objectOutputStream.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
