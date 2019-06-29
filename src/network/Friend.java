@@ -1,9 +1,6 @@
 package network;
 
-import Data.Library;
-import Data.Music;
-import Data.PlayList;
-import Data.User;
+import Data.*;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
@@ -22,8 +19,6 @@ public class Friend {
     private static ArrayList<Friend> friends = new ArrayList<>();
     private volatile ObjectOutputStream objectOutputStream;
     private volatile ObjectInputStream objectInputStream;
-    private DataInputStream dataInputStream;
-    private DataOutputStream dataOutputStream;
     private ArrayList<String> musics;
     private Thread listeningThread;
 
@@ -80,27 +75,17 @@ public class Friend {
                 break;
             }
         }
+        DataOutputStream dataOutputStream = null;
+        DataInputStream dataInputStream = null;
         sendingMusic = new byte[(int)musicFile.length()];
-        System.out.println("bad as  new byteArray");
-        //OutputStream outputStream = null;
-//        try {
-//            outputStream = socket.getOutputStream();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
+        System.out.println("Sending...");
         try {
-//            objectOutputStream.wait();
-//            objectInputStream.wait();
-            dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-            dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-
-
+           dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+           dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-
         try {
             dataOutputStream.flush();
             FileInputStream fis = new FileInputStream(musicFile);
@@ -114,58 +99,53 @@ public class Friend {
             }
             System.out.println("bad as write");
             System.out.println(sum);
-            //dataOutputStream.write(0);
             dataOutputStream.flush();
-            System.out.println("bad as flush");
+            System.out.println("Sent");
             fis.close();
-//            dataOutputStream.close();
-            //dataInputStream.close();
-            Thread.sleep(20000);
-//            objectOutputStream.notify();
-//            objectInputStream.notify();
-//            objectOutputStream.flush();
-//            objectOutputStream.writeUTF(BasicBase64format);
-//            System.out.println("ok");
-////            ByteBuffer buf = ByteBuffer.allocate(4);
-////            buf.putInt(sendingMusic.length);
-////            objectOutputStream.write(buf.array(), 0, 4);
-////            System.out.println(sendingMusic.length);
-////            objectOutputStream.write(sendingMusic, 0, sendingMusic.length);
-////            System.out.println("sent");
-////            System.out.println(sendingMusic.length);
-////            objectOutputStream.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
     public void download(String musicName){
         listeningThread.stop();
-        byte[] downloadingMusic = null;
+        int fileSize = 16*1024;
+        byte[] downloadingMusic = new byte[fileSize];
+        DataInputStream dataInputStream = null;
+        DataOutputStream dataOutputStream = null;
         try {
             objectOutputStream.writeObject(musicName);
+            objectOutputStream.flush();
             System.out.println("receiving... ");
-//            System.out.println("Press any key when downloaded...");
-//            Scanner scanner = new Scanner(System.in);
-//            scanner.next();
-            int size = objectInputStream.readInt();
-            downloadingMusic = new byte[size];
-            System.out.println(size);
-            objectInputStream.read(downloadingMusic, 0, size);
-            System.out.println(downloadingMusic.length);
+            dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            FileOutputStream savedMusic = new FileOutputStream(".\\Downloads\\" + musicName + ".mp3");
+            int tempCountByte;
+            int size = 0;
+            int count = 0;
+            while(true){
+                Thread.sleep(10);
+                if (dataInputStream.available() == 0 && count > 200){
+                    break;
+                }
+                tempCountByte = dataInputStream.read(downloadingMusic);
+                savedMusic.write(downloadingMusic, 0, tempCountByte);
+                savedMusic.flush();
+                count++;
+            }
             System.out.println("received");
+            savedMusic.close();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         try {
-            FileOutputStream savedMusic = new FileOutputStream(".\\Downloads\\" + musicName + ".mp3");
-            savedMusic.write(downloadingMusic);
-            savedMusic.close();
             File savedFile = new File(".\\Downloads\\" + musicName + ".mp3");
-            new Music(savedFile.getAbsolutePath());
+            Music music = new Music(savedFile.getAbsolutePath());
+            music.setAlbum();
+            Album.addMusicToAlbum(music);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -181,7 +161,7 @@ public class Friend {
     public ArrayList<String> setMusic(){
         ArrayList<String> sharedMusics = new ArrayList<>();
         for (Library music : ((PlayList)PlayList.getPlayLists().get(1)).getPlayListMusics()){
-            sharedMusics.add(((Music)music).getTitle());
+            sharedMusics.add("" + (System.currentTimeMillis() - ((Music)music).getLastPlaytime())+ "@@@@" + ((Music)music).getTitle());
         }
         return sharedMusics;
     }

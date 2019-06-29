@@ -215,7 +215,14 @@ public class Graphic {
         eastGridPanel.removeAll();
         eastGridPanel.revalidate();
         for (Friend friend : Friend.getFriends()){
-            JButton friendButton = new JButton("<html><p style=\"font-size:1.3em\">" + friend.getName() + "</p><p>" + friend.getMusics().get(0) + "</p></html>");
+            long recentTime = Long.parseLong(friend.getMusics().get(0).split("@@@@")[0]) / 1000;
+            String time = "";
+            if (recentTime / 60 < 1){
+                time = time.concat("" + (recentTime%60) + " Seconds ago");
+            } else {
+                time = time.concat("" + (recentTime/60) + " Minutes ago");
+            }
+            JButton friendButton = new JButton("<html><p style=\"font-size:1.3em\">" + friend.getName() + "</p><p>" + friend.getMusics().get(0).split("@@@@")[1] + "</p><p>" + time + "</p></html>");
             eastGridPanel.add(friendButton);
             friendButton.setBackground(Color.black);
             friendButton.setPreferredSize(new Dimension(120, 100));

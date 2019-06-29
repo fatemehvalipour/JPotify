@@ -22,18 +22,21 @@ public class ShowListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         try {
             if (e.getSource() instanceof JButton && ((((JButton) e.getSource()).getText().equals("Music")) || (((JButton)e.getSource()).getText().equals("Albums")) || (((JButton)e.getSource()).getText().equals("PlayList")))) {
-                System.out.println(1);
                 if (((JButton) e.getSource()).getText().equals("Music")) {
                     graphic.showLibrary(Music.getMusics(), false);
+                    PlayList.selectedPlayList = null;
                 } else if (((JButton) e.getSource()).getText().equals("Albums")){
                     graphic.showLibrary(Album.getAlbums(), false);
+                    PlayList.selectedPlayList = null;
                 } else {
                     graphic.showLibrary(PlayList.getPlayLists(), true);
+                    PlayList.selectedPlayList = null;
                 }
             } else {
                 for (Library album : Album.getAlbums()) {
                     if (((Album) album).getAlbumName().equals(((JButton) e.getSource()).getText())) {
                         graphic.showLibrary(((Album) album).getMusics(), false);
+                        PlayList.selectedPlayList = null;
                         return;
                     }
                 }
@@ -47,7 +50,6 @@ public class ShowListener implements MouseListener {
                                     break;
                                 }
                             }
-
                         } else {
                             graphic.showLibrary(((PlayList) playList).getPlayListMusics(), true);
                             PlayList.selectedPlayList = (PlayList) playList;

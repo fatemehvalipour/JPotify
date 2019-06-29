@@ -1,6 +1,7 @@
 package Data;
 
 import com.mpatric.mp3agic.*;
+import com.sun.org.apache.bcel.internal.generic.LASTORE;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -20,13 +21,13 @@ public class Music extends Library implements Serializable {
     public static boolean isMute = false;
     private File file;
     private boolean isFavorite;
+    private long lastPlaytime;
     private String address;
     private Mp3File mp3File;
     private Player player;
     private FileInputStream musicFile;
     public static boolean repeat = false;
     public static boolean shuffle = false;
-    //TODO change the icon if it is repeatable
     private boolean paused;
     private long pauseLocation;
     private long totalSongLength;
@@ -41,6 +42,7 @@ public class Music extends Library implements Serializable {
         paused = false;
         totalSongLength = 0;
         pauseLocation = 0;
+        lastPlaytime = 0;
         mp3File = new Mp3File(address);
         musics.add(this);
         timer = new Timer();
@@ -121,6 +123,20 @@ public class Music extends Library implements Serializable {
 //        return new String(albumbytes);
     }
 
+    public void setAlbum(){
+        if (mp3File.hasId3v1Tag()){
+            ID3v1 tag = mp3File.getId3v1Tag();
+            tag.setAlbum("Downloaded Music");
+            try {
+                mp3File.save(this.getTitle());
+            } catch (NotSupportedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public Image getAlbumArt() throws IOException {
         if (mp3File.hasId3v2Tag()) {
@@ -133,7 +149,7 @@ public class Music extends Library implements Serializable {
             }
             return image;
         }
-        return null;
+        return image = ImageIO.read(getClass().getResource("default_song.jpg"));
     }
 
     public static ArrayList<Library> getMusics() {
@@ -149,6 +165,7 @@ public class Music extends Library implements Serializable {
         totalSongLength = musicFile.available();
         player = new Player(musicFile);
         timer = new Timer();
+        lastPlaytime = System.currentTimeMillis();
         timer.scheduleAtFixedRate(new estimatedTime(), 0, 1000);//TODO chera inja pak nakonim aks o ina ro??
         new Thread(() -> {
             try {
@@ -337,5 +354,9 @@ public class Music extends Library implements Serializable {
 
     public void setEstimatedTime(int estimatedTime) {
         this.estimatedTime = estimatedTime;
+    }
+
+    public long getLastPlaytime() {
+        return lastPlaytime;
     }
 }
