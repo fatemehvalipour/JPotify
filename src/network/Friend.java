@@ -82,13 +82,22 @@ public class Friend {
         }
         sendingMusic = new byte[(int)musicFile.length()];
         System.out.println("bad as  new byteArray");
+        //OutputStream outputStream = null;
+//        try {
+//            outputStream = socket.getOutputStream();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         try {
 //            objectOutputStream.wait();
 //            objectInputStream.wait();
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            dataInputStream = new DataInputStream(socket.getInputStream());
-        } catch (IOException e) {
+            dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+
+
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -97,7 +106,7 @@ public class Friend {
             FileInputStream fis = new FileInputStream(musicFile);
             int counter;
             int sum = 0;
-            while ((counter = fis.read(sendingMusic, 0, 1024*1024)) > 0) {
+            while ((counter = fis.read(sendingMusic)) > 0) {
                 System.out.println(counter);
                 sum += counter;
                 dataOutputStream.write(sendingMusic, 0, counter);
@@ -105,11 +114,12 @@ public class Friend {
             }
             System.out.println("bad as write");
             System.out.println(sum);
+            //dataOutputStream.write(0);
             dataOutputStream.flush();
             System.out.println("bad as flush");
             fis.close();
-            dataOutputStream.close();
-            dataInputStream.close();
+//            dataOutputStream.close();
+            //dataInputStream.close();
             Thread.sleep(20000);
 //            objectOutputStream.notify();
 //            objectInputStream.notify();
