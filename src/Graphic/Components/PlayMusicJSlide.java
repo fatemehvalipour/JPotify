@@ -8,6 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * handles JSlide while playing Music
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class PlayMusicJSlide extends JPanel {
     private JProgressBar playSlider;
     private long frameCount;
@@ -15,12 +21,15 @@ public class PlayMusicJSlide extends JPanel {
     private JLabel timePlayed;
     private JLabel wholeTime;
 
-
+    /**
+     * constructor for this class
+     */
     public PlayMusicJSlide() {
         super();
         setBackground(Color.black);
         setLayout(new BorderLayout());
         playSlider = new JProgressBar(0, 100);
+        playSlider.setForeground(Color.pink);
         playSlider.addMouseListener(new SeekBarChangeListener());
         playSlider.setBackground(Color.black);
         playSlider.setValue(0);
@@ -47,7 +56,7 @@ public class PlayMusicJSlide extends JPanel {
                 } else {
                     timePlayed.setText("0" + (Music.playingMusic.getEstimatedTime() / 60) + ":" + (Music.playingMusic.getEstimatedTime() % 60));
                 }
-                if (!Music.playingMusic.equals(nowMusic)){//TODO bad as stop chi mishe??
+                if (!Music.playingMusic.equals(nowMusic)){
                     nowMusic = Music.playingMusic;
                     wholeTime.setText("" + (Music.playingMusic.getDuration() / 60) + ":" + (Music.playingMusic.getDuration() % 60));
                 }
@@ -67,6 +76,8 @@ public class PlayMusicJSlide extends JPanel {
                 }
             }
         }).start();
+        wholeTime.setForeground(Color.white);
+        timePlayed.setForeground(Color.white);
         horizontalBox = Box.createHorizontalBox();
         horizontalBox.add(Box.createGlue());
         horizontalBox.add(timePlayed);

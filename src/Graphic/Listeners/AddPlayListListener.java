@@ -10,6 +10,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+/**
+ * add a playist to playlist arraylist
+ *
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class AddPlayListListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {

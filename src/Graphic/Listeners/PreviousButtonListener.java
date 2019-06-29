@@ -9,6 +9,10 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * @author Fatemeh Valipour & Korosh Roohi
+ * @since 2019.06.22
+ */
 public class PreviousButtonListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {

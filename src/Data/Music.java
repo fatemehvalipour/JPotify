@@ -13,6 +13,13 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * This class hold a music attributes and some method for working with music
+ *
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class Music extends Library implements Serializable {
     //TODO make the public key word to private
     public static volatile Music playingMusic = null;
@@ -35,6 +42,14 @@ public class Music extends Library implements Serializable {
     private Timer timer;
     private static volatile ArrayList<Library> musics = new ArrayList<>();
 
+    /**
+     * a constructor for music class
+     *
+     * @param address the path for music file
+     * @throws InvalidDataException for invalid data
+     * @throws UnsupportedTagException this for problem in music metadata
+     * @throws IOException for problem with music file
+     */
     public Music(String address) throws InvalidDataException, UnsupportedTagException, IOException {
         this.address = address;
         musicFile = new FileInputStream(address);
@@ -47,9 +62,13 @@ public class Music extends Library implements Serializable {
         musics.add(this);
         timer = new Timer();
         file = new File(address);
-        //TODO exception handling
     }
 
+    /**
+     * returns the music title
+     *
+     * @return a string of music title
+     */
     public String getTitle() {
         if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
@@ -68,6 +87,11 @@ public class Music extends Library implements Serializable {
 //        return new String(namebytes);
     }
 
+    /**
+     * returns the last 128 byte of music file
+     *
+     * @return a byte array
+     */
     public byte[] getLastBytes(){
         byte[] lastBytes = null;
         try {
@@ -88,6 +112,10 @@ public class Music extends Library implements Serializable {
         return lastBytes;
     }
 
+    /**
+     * returns the name of the artist of the music from the last 128 byte or from the tag
+     * @return a String that is the name of artist
+     */
     public String getArtist() {
         if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
@@ -105,6 +133,10 @@ public class Music extends Library implements Serializable {
 //        return new String(artistbytes);
     }
 
+    /**
+     * returns the name of the album of the music from the last 128 byte or from the tag
+     * @return String for the name of song
+     */
     public String getAlbum() {
         if (mp3File.hasId3v1Tag()) {
             ID3v1 tag = mp3File.getId3v1Tag();
@@ -123,6 +155,9 @@ public class Music extends Library implements Serializable {
 //        return new String(albumbytes);
     }
 
+    /**
+     * sets an album for Downloaded musics
+     */
     public void setAlbum(){
         if (mp3File.hasId3v1Tag()){
             ID3v1 tag = mp3File.getId3v1Tag();
@@ -137,6 +172,11 @@ public class Music extends Library implements Serializable {
         }
     }
 
+    /**
+     * returns AlbumArt of music
+     * @return image that is the AlbumArt
+     * @throws IOException
+     */
     @Override
     public Image getAlbumArt() throws IOException {
         if (mp3File.hasId3v2Tag()) {
@@ -152,21 +192,35 @@ public class Music extends Library implements Serializable {
         return image = ImageIO.read(getClass().getResource("default_song.jpg"));
     }
 
+    /**
+     *
+     * @return ArrayList of musics
+     */
     public static ArrayList<Library> getMusics() {
         return musics;
     }
 
+    /**
+     *
+     * @return String that is the address of music
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * has a thread that plays the music
+     * PlayButtonListener
+     * @throws IOException
+     * @throws JavaLayerException
+     */
     public void play() throws IOException, JavaLayerException {
         musicFile = new FileInputStream(address);
         totalSongLength = musicFile.available();
         player = new Player(musicFile);
         timer = new Timer();
         lastPlaytime = System.currentTimeMillis();
-        timer.scheduleAtFixedRate(new estimatedTime(), 0, 1000);//TODO chera inja pak nakonim aks o ina ro??
+        timer.scheduleAtFixedRate(new estimatedTime(), 0, 1000);
         new Thread(() -> {
             try {
                 musics.remove(playingMusic);
@@ -199,6 +253,10 @@ public class Music extends Library implements Serializable {
         }
     }
 
+    /**
+     * stops the music
+     * StopButtonListener
+     */
     public void stop() {
         timer.cancel();
         estimatedTime = 0;
@@ -210,6 +268,12 @@ public class Music extends Library implements Serializable {
         }
     }
 
+    /**
+     * resume a paused music
+     * playButtonListener
+     * @throws IOException
+     * @throws JavaLayerException
+     */
     public void resume() throws IOException, JavaLayerException {
         paused = false;
         timer = new Timer();
@@ -226,6 +290,10 @@ public class Music extends Library implements Serializable {
         }).start();
     }
 
+    /**
+     * pauses a playing music
+     * PlayMusicListener
+     */
     public void pause() {
         timer.cancel();
         paused = true;
@@ -239,6 +307,10 @@ public class Music extends Library implements Serializable {
         }
     }
 
+    /**
+     * plays the previous music in the list
+     * previousButtonListener
+     */
     public static void previous() {
         int index = 0;
         if (Music.playingMusic != null) {
@@ -271,6 +343,10 @@ public class Music extends Library implements Serializable {
         }
     }
 
+    /**
+     * plays the next music in the list
+     * nextButtonListener
+     */
     public static void next() {
         int index = 0;
         if (Music.playingMusic != null) {
@@ -304,35 +380,66 @@ public class Music extends Library implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return long that is the time of the music
+     */
     public long getDuration() {
         return mp3File.getLengthInSeconds();
     }
 
+    /**
+     *
+     * @return boolean to show if the music is paused or not
+     */
     public boolean isPaused() {
         return paused;
     }
 
+    /**
+     *
+     * @param paused a boolean to show if the music is paused or not
+     */
     public void setPaused(boolean paused) {
         this.paused = paused;
     }
 
+    /**
+     *
+     * @return a boolean to show if the music is favourite or not
+     */
     public boolean isFavorite() {
         return isFavorite;
     }
 
+    /**
+     *
+     * @param favorite to show if the music is favourite or not
+     */
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
     }
 
+    /**
+     *
+     * @return int that is the estimated time of music
+     */
     public int getEstimatedTime() {
         return estimatedTime;
     }
 
+    /**
+     *
+     * @return string of object
+     */
     @Override
     public String toString() {
         return "Title: " + this.getTitle() + "\nArtist: " + this.getArtist() + "\nAlbum: " + this.getAlbum();
     }
 
+    /**
+     * inner class to increase the estimated time
+     */
     class estimatedTime extends TimerTask {
         @Override
         public void run() {
@@ -340,22 +447,42 @@ public class Music extends Library implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return Player of music
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     *
+     * @return long that is the total length of music
+     */
     public long getTotalSongLength() {
         return totalSongLength;
     }
 
+    /**
+     *
+     * @param pauseLocation where the music is paused
+     */
     public void setPauseLocation(long pauseLocation) {
         this.pauseLocation = pauseLocation;
     }
 
+    /**
+     *
+     * @param estimatedTime sets the estimated time
+     */
     public void setEstimatedTime(int estimatedTime) {
         this.estimatedTime = estimatedTime;
     }
 
+    /**
+     *
+     * @return long that is the estimated time
+     */
     public long getLastPlaytime() {
         return lastPlaytime;
     }

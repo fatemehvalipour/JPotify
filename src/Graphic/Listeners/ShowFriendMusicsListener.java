@@ -7,6 +7,13 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * showing friends
+ *
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class ShowFriendMusicsListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -26,7 +33,7 @@ public class ShowFriendMusicsListener implements MouseListener {
         musicFrame.add(new JScrollPane(interfacePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
         interfacePanel.setLayout(new BoxLayout(interfacePanel, BoxLayout.Y_AXIS));
         for (String music : Friend.selectedFriend.getMusics()){
-            JButton musicButton = new JButton(music);
+            JButton musicButton = new JButton(music.split("@@@@")[1]);
             musicButton.setFocusable(false);
             musicButton.setBackground(Color.black);
             musicButton.setPreferredSize(new Dimension(500, 30));

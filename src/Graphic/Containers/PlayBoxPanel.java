@@ -8,6 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * makes a panel with the buttons of PlayBox
+ * @author Fatemeh Valipour & Korosh Roohi
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class PlayBoxPanel extends JPanel{
     private JButton playButton;
     private JButton nextButton;

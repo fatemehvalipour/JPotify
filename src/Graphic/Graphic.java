@@ -14,7 +14,13 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-//TODO check all the sizes plz
+/**
+ * a class of graphic for showing the main frame
+ *
+ * @author Fatemeh Valipour & Korosh Roohi
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class Graphic {
     private JFrame mainFrame;
     private BorderPanel mainBorderPanel;
@@ -31,6 +37,7 @@ public class Graphic {
     private BoxPanel southCenterBoxPanel;
 //    private VoiceJSlide voiceSlider;
     private ListButton musicButton;
+    private ListButton playVideoButton;
     private ListButton albumButton;
     private ListButton playListButton;
     private PlayMusicJSlide playMusicJSlider;
@@ -40,10 +47,15 @@ public class Graphic {
     private JLabel libraries;
     public static boolean SystemVoiceMute = false;
 
-
+    /**
+     * a constructor for initializing panels and frame
+     *
+     * @throws IOException
+     */
     public Graphic() throws IOException {
         mainFrame = new JFrame("JPotify");
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        mainFrame.setIconImage(new ImageIcon("C:\\Users\\fatemeh\\IdeaProjects\\JPotify3\\src\\Graphic\\JPotify.png").getImage());
         mainBorderPanel = new BorderPanel(mainFrame);
         centerBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.CENTER);
         northBorderPanel = new BorderPanel(mainBorderPanel, BorderLayout.NORTH);
@@ -63,25 +75,26 @@ public class Graphic {
         westBorderPanel.setPreferredSize(new Dimension(120, 445));
         centerBorderPanel.setPreferredSize(new Dimension(710, 445));
         southBorderPanel.setPreferredSize(new Dimension(950, 120));
-        User.setUserName("Water Bottle");
-        searchPanel = new SearchPanel(User.getUserName());
+        searchPanel = new SearchPanel(User.getUsername());
         mainBorderPanel.add(searchPanel, BorderLayout.PAGE_START);
         albumArt = new JLabel();
         nameOfMusic = new JLabel();
         flowVoicePanel = new FlowVoicePanel(southBorderPanel, new VoiceJSlide( -1000, 0));
         westBorderPanel.add(albumArt, BorderLayout.SOUTH);
         southBorderPanel.add(nameOfMusic, BorderLayout.WEST);
-        libraries = new JLabel("Libraries");
+        libraries = new JLabel();
+        libraries.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("Icon.jpg")).getScaledInstance(120, 50,Image.SCALE_SMOOTH)));
         westGridPanel.add(libraries);
         libraries.setFont(libraries.getFont().deriveFont(22.0f));
-        libraries.setForeground(Color.WHITE);
-        libraries.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        libraries.setBackground(Color.black);
         musicButton = new ListButton(westGridPanel, "Music");
         musicButton.addMouseListener(new ShowListener(this));
         albumButton = new ListButton(westGridPanel, "Albums");
         albumButton.addMouseListener(new ShowListener(this));
         playListButton = new ListButton(westGridPanel, "PlayList");
         playListButton.addMouseListener(new ShowListener(this));
+        playVideoButton = new ListButton(westGridPanel, "Play Video");
+        playVideoButton.addMouseListener(new PlayVideoListener());
         westGridPanel.add(Box.createGlue());
         playMusicJSlider = new PlayMusicJSlide();
         southCenterBoxPanel.add(playMusicJSlider);
@@ -103,13 +116,24 @@ public class Graphic {
         mainFrame.setVisible(true);
     }
 
+    /**
+     * for setting music album art in panel
+     *
+     * @param music
+     * @throws IOException
+     */
     public void setAlbumArt(Music music) throws IOException {
         Image image = music.getAlbumArt();
         image = image.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         albumArt.setPreferredSize(new Dimension(120, 120));
         albumArt.setIcon(new ImageIcon(image));
     }
-
+    /**
+     * for setting music name in panel
+     *
+     * @param music
+     * @throws IOException
+     */
     public void setNameOfSong(Music music) {
         nameOfMusic.setText("<html>" + music.getTitle() + "<br>" + music.getArtist() + "</html>");
         nameOfMusic.setFont(nameOfMusic.getFont().deriveFont(22.0f));
@@ -117,14 +141,29 @@ public class Graphic {
         nameOfMusic.setPreferredSize(new Dimension(150, 120));
     }
 
+    /**
+     * for removing music album art in panel
+     *
+     * @throws IOException
+     */
     public void removeAlbumArt() {
         albumArt.setIcon(null);
     }
-
+    /**
+     * for removing music name in panel
+     *
+     * @throws IOException
+     */
     public void removeNameOfSong(){
         nameOfMusic.setText("");
     }
 
+    /**
+     * for showing the libraries in center of window
+     * @param libraries
+     * @param isPlayList
+     * @throws IOException
+     */
     public void showLibrary(ArrayList<Library> libraries, boolean isPlayList) throws IOException {
         centerGridBagPanel.removeAll();
         centerGridBagPanel.revalidate();
@@ -211,19 +250,25 @@ public class Graphic {
         centerGridBagPanel.repaint();
     }
 
+    /**
+     * shows the friends
+     */
     public void showFriendActivity() {
         eastGridPanel.removeAll();
         eastGridPanel.revalidate();
-        for (Friend friend : Friend.getFriends()){
+        for (Friend friend : Friend.getFriends()) {
             long recentTime = Long.parseLong(friend.getMusics().get(0).split("@@@@")[0]) / 1000;
             String time = "";
-            if (recentTime / 60 < 1){
+            if (recentTime == 0){
+                time = "a long time ago";
+            } else if (recentTime / 60 < 1){
                 time = time.concat("" + (recentTime%60) + " Seconds ago");
             } else {
                 time = time.concat("" + (recentTime/60) + " Minutes ago");
             }
             JButton friendButton = new JButton("<html><p style=\"font-size:1.3em\">" + friend.getName() + "</p><p>" + friend.getMusics().get(0).split("@@@@")[1] + "</p><p>" + time + "</p></html>");
             eastGridPanel.add(friendButton);
+            friendButton.setForeground(Color.white);
             friendButton.setBackground(Color.black);
             friendButton.setPreferredSize(new Dimension(120, 100));
             friendButton.addMouseListener(new ShowFriendMusicsListener());

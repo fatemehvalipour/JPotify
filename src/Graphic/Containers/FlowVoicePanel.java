@@ -8,6 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * makes a panel with FlowLayout
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class FlowVoicePanel extends JPanel {
 
     public FlowVoicePanel(BorderPanel borderPanel, VoiceJSlide voiceJSlide) {

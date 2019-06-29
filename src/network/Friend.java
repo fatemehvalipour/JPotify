@@ -4,17 +4,21 @@ import Data.*;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Scanner;
 
+/**
+ * classifies the friends
+ *
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class Friend {
     private String name;
     private Socket socket;
+    private static boolean transfering = false;
     public static Friend selectedFriend = null;
     private static ArrayList<Friend> friends = new ArrayList<>();
     private volatile ObjectOutputStream objectOutputStream;
@@ -22,13 +26,17 @@ public class Friend {
     private ArrayList<String> musics;
     private Thread listeningThread;
 
+    /**
+     * initializes a friend
+     * @param socket
+     */
     public Friend(Socket socket) {
         friends.add(this);
         this.socket = socket;
         try {
             objectOutputStream = new ObjectOutputStream((socket.getOutputStream()));
             objectInputStream = new ObjectInputStream((socket.getInputStream()));
-            objectOutputStream.writeObject(User.getUserName());
+            objectOutputStream.writeObject(User.getUsername());
             name = (String) objectInputStream.readObject();
             objectOutputStream.writeObject(setMusic());
             musics = (ArrayList<String>) objectInputStream.readObject();
@@ -42,6 +50,9 @@ public class Friend {
             @Override
             public void run() {
                 while (true){
+                    if (transfering){
+                        continue;
+                    }
                     try {
                         Object object = objectInputStream.readObject();
                         if (object instanceof String){
@@ -66,6 +77,10 @@ public class Friend {
         listeningThread.start();
     }
 
+    /**
+     * uploads a song
+     * @param musicName
+     */
     public void upload(String musicName) {
         File musicFile = null;
         byte[] sendingMusic = null;
@@ -108,15 +123,21 @@ public class Friend {
             e.printStackTrace();
         }
     }
+
+    /**
+     * downloads a song
+     * @param musicName
+     */
     public void download(String musicName){
-        listeningThread.stop();
         int fileSize = 16*1024;
         byte[] downloadingMusic = new byte[fileSize];
         DataInputStream dataInputStream = null;
         DataOutputStream dataOutputStream = null;
         try {
             objectOutputStream.writeObject(musicName);
+            transfering = true;
             objectOutputStream.flush();
+//            listeningThread.suspend();
             System.out.println("receiving... ");
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
@@ -155,17 +176,29 @@ public class Friend {
         } catch (UnsupportedTagException e) {
             e.printStackTrace();
         }
-        listeningThread.resume();
+        transfering = false;
+//        listeningThread.resume();
     }
 
+    /**
+     * show the information of the music sent
+     * @return
+     */
     public ArrayList<String> setMusic(){
         ArrayList<String> sharedMusics = new ArrayList<>();
         for (Library music : ((PlayList)PlayList.getPlayLists().get(1)).getPlayListMusics()){
-            sharedMusics.add("" + (System.currentTimeMillis() - ((Music)music).getLastPlaytime())+ "@@@@" + ((Music)music).getTitle());
+            if (((Music)music).getLastPlaytime() == 0){
+                sharedMusics.add("0@@@@" + ((Music) music).getTitle());
+            } else {
+                sharedMusics.add("" + (System.currentTimeMillis() - ((Music) music).getLastPlaytime()) + "@@@@" + ((Music) music).getTitle());
+            }
         }
         return sharedMusics;
     }
 
+    /**
+     * updates the information
+     */
     public void refresh(){
         try {
             objectOutputStream.flush();
@@ -175,14 +208,26 @@ public class Friend {
         }
     }
 
+    /**
+     *
+     * @return name of friend
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return musics of friend
+     */
     public ArrayList<String> getMusics() {
         return musics;
     }
 
+    /**
+     *
+     * @return the list of friends
+     */
     public static ArrayList<Friend> getFriends() {
         return friends;
     }

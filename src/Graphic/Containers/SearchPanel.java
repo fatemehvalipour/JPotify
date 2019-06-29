@@ -12,6 +12,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+/**
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class SearchPanel extends JPanel {
     private JTextField searchBar;
     private JTextArea username;
@@ -19,10 +24,10 @@ public class SearchPanel extends JPanel {
     public SearchPanel(String user) throws IOException {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
-        searchBar = new JTextField("Search");
+        searchBar = new JTextField();
         searchBar.addActionListener(new SearchListener());
-        //searchBar.getAccessibleContext();
         //searchBar.
+        //searchBar.getAccessibleContext();
         username = new JTextArea(user);
         JPanel searchBox = new JPanel();
         searchBox.setBackground(Color.WHITE);
@@ -31,7 +36,7 @@ public class SearchPanel extends JPanel {
         searchIcon.setBackground(Color.WHITE);
         searchIcon.setPreferredSize(new Dimension(10, 10));
         searchBar.setBackground(Color.WHITE);
-        searchBar.setPreferredSize(new Dimension(70, 20));
+        searchBar.setPreferredSize(new Dimension(80, 20));
         Image image = ImageIO.read(getClass().getResource("search.png")).getScaledInstance(10, 10, Image.SCALE_SMOOTH);
         searchIcon.setIcon(new ImageIcon(image));
         searchBox.add(searchIcon);

@@ -11,7 +11,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
+/**
+ * a listener for handling musics in playlist
+ *
+ * @author Fatemeh Valipour & Korosh Roohi
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class MusicDeleteListener extends JPopupMenu {
     public MusicDeleteListener(Music music) {
         super();

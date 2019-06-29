@@ -10,6 +10,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+/**
+ * a listener for play and pause the musics
+ *
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class PlayButtonListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {

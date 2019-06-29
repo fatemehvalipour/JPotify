@@ -6,10 +6,19 @@ import com.mpatric.mp3agic.UnsupportedTagException;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * this class saves and loads information
+ * @author  Fatemeh Valipour & Korosh Roohi
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class Backup {
     private static Scanner scanner;
     private static FileWriter fileWriter;
 
+    /**
+     * saves the information on a  .txt file
+     */
     public static void save(){
         try {
             fileWriter = new FileWriter("save.txt");
@@ -34,6 +43,9 @@ public class Backup {
         }
     }
 
+    /**
+     * loads the information from the file
+     */
     public static void load(){
         try {
             scanner = new Scanner(new File("save.txt"));

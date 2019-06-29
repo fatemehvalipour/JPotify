@@ -11,6 +11,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+/**
+ * a listener for handling like and dislike musics
+ *
+ * @author Fatemeh Valipour & Korosh Roohi
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class LikeButtonListener implements MouseListener {
 
     @Override

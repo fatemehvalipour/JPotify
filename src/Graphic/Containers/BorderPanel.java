@@ -4,6 +4,12 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+/**
+ * make a panel with BorderLayout
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class BorderPanel extends JPanel {
     public BorderPanel(Container con) {
         super();

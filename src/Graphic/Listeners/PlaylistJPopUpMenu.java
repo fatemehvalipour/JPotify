@@ -11,6 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * showing a jpopmenu for working with playlists
+ *
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class PlaylistJPopUpMenu extends JPopupMenu {
 
     public PlaylistJPopUpMenu(PlayList playList) {

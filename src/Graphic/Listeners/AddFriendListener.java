@@ -11,6 +11,13 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * adding friend for networking system
+ *
+ * @author Fatemeh Valipour & Korosh Roohi
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class AddFriendListener implements MouseListener {
 
     @Override

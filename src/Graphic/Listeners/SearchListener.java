@@ -9,6 +9,13 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * for searching music
+ *
+ * @author Korosh Roohi & Fatemeh Valipour
+ * @since 2019.06.22
+ * @version 1.0
+ */
 public class SearchListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
