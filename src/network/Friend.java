@@ -20,8 +20,10 @@ public class Friend {
     private Socket socket;
     public static Friend selectedFriend = null;
     private static ArrayList<Friend> friends = new ArrayList<>();
-    private ObjectOutputStream objectOutputStream;
-    private ObjectInputStream objectInputStream;
+    private volatile ObjectOutputStream objectOutputStream;
+    private volatile ObjectInputStream objectInputStream;
+    private DataInputStream dataInputStream;
+    private DataOutputStream dataOutputStream;
     private ArrayList<String> musics;
     private Thread listeningThread;
 
@@ -29,8 +31,8 @@ public class Friend {
         friends.add(this);
         this.socket = socket;
         try {
-            objectOutputStream = new ObjectOutputStream(new DataOutputStream(socket.getOutputStream()));
-            objectInputStream = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
+            objectOutputStream = new ObjectOutputStream((socket.getOutputStream()));
+            objectInputStream = new ObjectInputStream((socket.getInputStream()));
             objectOutputStream.writeObject(User.getUserName());
             name = (String) objectInputStream.readObject();
             objectOutputStream.writeObject(setMusic());
@@ -80,19 +82,37 @@ public class Friend {
         }
         sendingMusic = new byte[(int)musicFile.length()];
         System.out.println("bad as  new byteArray");
+
         try {
+//            objectOutputStream.wait();
+//            objectInputStream.wait();
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataInputStream = new DataInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            dataOutputStream.flush();
             FileInputStream fis = new FileInputStream(musicFile);
             int counter;
-            while ((counter = fis.read(sendingMusic)) > 0) {
+            int sum = 0;
+            while ((counter = fis.read(sendingMusic, 0, 1024*1024)) > 0) {
                 System.out.println(counter);
-                objectOutputStream.write(sendingMusic, 0, counter);
-                objectOutputStream.flush();
+                sum += counter;
+                dataOutputStream.write(sendingMusic, 0, counter);
+                dataOutputStream.flush();
             }
             System.out.println("bad as write");
-            objectOutputStream.write(0);
-            objectOutputStream.flush();
+            System.out.println(sum);
+            dataOutputStream.flush();
             System.out.println("bad as flush");
             fis.close();
+            dataOutputStream.close();
+            dataInputStream.close();
+            Thread.sleep(20000);
+//            objectOutputStream.notify();
+//            objectInputStream.notify();
 //            objectOutputStream.flush();
 //            objectOutputStream.writeUTF(BasicBase64format);
 //            System.out.println("ok");
@@ -107,6 +127,8 @@ public class Friend {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

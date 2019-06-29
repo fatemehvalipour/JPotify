@@ -180,6 +180,7 @@ public class Graphic {
                 musicPanel.setBackground(Color.black);
                 JLabel imageLabel = new JLabel(new ImageIcon(libraries.get(count).getAlbumArt().getScaledInstance(200,200, Image.SCALE_SMOOTH)));
                 imageLabel.setPreferredSize(new Dimension(200, 200));
+                imageLabel.setBackground(Color.black);
                 musicPanel.add(imageLabel);
                 JButton nameBtn;
                 if(libraries.get(count) instanceof Music){
